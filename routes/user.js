@@ -5,5 +5,6 @@ routes.get('/', users.getAllUsers);
 routes.get('/:_id', users.getUser);
 
 routes.post('/', users.createUser);
+routes.put('/:_id', users.updateUser);
 
 module.exports = routes;

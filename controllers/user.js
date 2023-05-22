@@ -18,7 +18,7 @@ exports.createUser = (req, res) => {
         email: req.body.email,
         phone: req.body.phone,
         juniorParticipants: req.body.juniorParticipants,
-        adultParticipants: req.bdoy.adultParticipants,
+        adultParticipants: req.body.adultParticipants,
     });
     // Save User in the database
     user
@@ -78,3 +78,27 @@ exports.getUser = (req, res) => {
             });
         });
 }
+
+exports.updateUser = ((req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+            message: 'Data to update cannot be empty!',
+        });
+    }
+
+    const _id = req.params._id;
+
+    User.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
+        .then((data) => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot update User with id=${_id}. Maybe User was not found.`,
+                });
+            } else res.send({ message: 'User was updated successfully'});
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: 'Error updating User with id=' + _id,
+            });
+        });
+});
