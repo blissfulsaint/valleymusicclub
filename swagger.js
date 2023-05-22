@@ -5,7 +5,7 @@ const doc = {
         title: 'My API',
         description: 'Valley Music Club API',
     },
-    host: 'localhost:8080',
+    host: 'valleymusicclub.onrender.com/',
     schemes: ['http'],
 };
 
