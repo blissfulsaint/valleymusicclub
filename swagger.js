@@ -6,7 +6,7 @@ const doc = {
         description: 'Valley Music Club API',
     },
     host: 'valleymusicclub.onrender.com',
-    schemes: ['http'],
+    schemes: ['https'],
 };
 
 const outputFile = './swagger.json';
