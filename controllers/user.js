@@ -24,7 +24,7 @@ exports.createUser = (req, res) => {
     user
         .save(user)
         .then((data) => {
-            res.send(data);
+            res.status(201).send(data);
         })
         .catch((err) => {
             res.status(500).send({
@@ -51,7 +51,7 @@ exports.getAllUsers = (req, res) => {
         }
     )
         .then((data) => {
-            res.send(data);
+            res.status(201).send(data);
         })
         .catch((err) => {
             res.status(500).send({
@@ -70,7 +70,7 @@ exports.getUser = (req, res) => {
                 res
                     .status(404)
                     .send({ message: 'Not found User with id ' + _id });
-            else res.send(data[0]);
+            else res.status(201).send(data[0]);
         })
         .catch((err) => {
             res.status(500).send({
@@ -94,7 +94,7 @@ exports.updateUser = ((req, res) => {
                 res.status(404).send({
                     message: `Cannot update User with id=${_id}. Maybe User was not found.`,
                 });
-            } else res.send({ message: 'User was updated successfully' });
+            } else res.status(201).send({ message: 'User was updated successfully' });
         })
         .catch((err) => {
             res.status(500).send({
