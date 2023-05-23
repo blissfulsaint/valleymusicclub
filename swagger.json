@@ -5,10 +5,10 @@
     "description": "Valley Music Club API",
     "version": "1.0.0"
   },
-  "host": "valleymusicclub.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/users/": {
