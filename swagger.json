@@ -14,16 +14,13 @@
     "/users/": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
-          "400": {
-            "description": "Bad Request"
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -31,45 +28,68 @@
         "description": "",
         "parameters": [
           {
-            "name": "body",
+            "name": "user",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "middleName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "lastName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "phone": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "juniorParticipants": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 0
                 },
                 "adultParticipants": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 0
                 }
-              }
+              },
+              "required": [
+                "firstName",
+                "middleName",
+                "lastName",
+                "username",
+                "password",
+                "email",
+                "phone",
+                "juniorParticipants",
+                "adultParticipants"
+              ]
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "412": {
             "description": "Precondition Failed"
@@ -83,9 +103,6 @@
     "/users/{_id}": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "_id",
@@ -95,11 +112,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
-          "400": {
-            "description": "Bad Request"
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -113,48 +133,71 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "user",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "middleName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "lastName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "phone": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 },
                 "juniorParticipants": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 0
                 },
                 "adultParticipants": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 0
                 }
-              }
+              },
+              "required": [
+                "firstName",
+                "middleName",
+                "lastName",
+                "username",
+                "password",
+                "email",
+                "phone",
+                "juniorParticipants",
+                "adultParticipants"
+              ]
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "412": {
             "description": "Precondition Failed"
@@ -177,9 +220,6 @@
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"

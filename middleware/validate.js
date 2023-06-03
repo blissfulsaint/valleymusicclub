@@ -1,30 +1,25 @@
-const validator = require('../helpers/validate');
+const db = require('../models');
+const mongoose = require('mongoose');
+const User = db.users;
 
-const saveContact = (req, res, next) => {
-    const validationRule = {
-        firstName: 'required|string',
-        middleName: 'required|string',
-        lastName: 'required|string',
-        username: 'required|string',
-        password: 'required|string',
-        email: 'required|email',
-        phone: 'required|string',
-        juniorParticipants: 'required|string',
-        adultParticipants: 'required|string'
-    };
-    validator(req.body, validationRule, {}, (err, status) => {
-        if (!status) {
-            res.status(412).send({
-                success: false,
-                message: 'Validation failed',
-                data: err
-            });
-        } else {
-            next();
-        }
+exports.validateContact = (req, res, next) => {
+    const user = new User({
+        firstName: req.body.firstName,
+        middleName: req.body.middleName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        phone: req.body.phone,
+        juniorParticipants: req.body.juniorParticipants,
+        adultParticipants: req.body.adultParticipants
     });
-};
 
-module.exports = {
-    saveContact
-};
+    let error = user.validateSync();
+
+    if (error) {
+        res.status(412).send({message: error.message});
+    } else {
+        next();
+    }
+}
