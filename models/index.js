@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     firstName: {
         type: String,
-        minLength: 1,
         required: [true, 'User first name required']
     },
     middleName: {

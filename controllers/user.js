@@ -125,7 +125,7 @@ exports.updateUser = (req, res) => {
   const user = new User({
     firstName: req.body.firstName,
     middleName: req.body.middleName,
-    lastName: req.bdoy.lastName,
+    lastName: req.body.lastName,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
