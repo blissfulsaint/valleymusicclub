@@ -121,22 +121,9 @@ exports.updateUser = (req, res) => {
       });
   }
 
-  // Create a User
-  const user = new User({
-    firstName: req.body.firstName,
-    middleName: req.body.middleName,
-    lastName: req.body.lastName,
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
-    phone: req.body.phone,
-    juniorParticipants: req.body.juniorParticipants,
-    adultParticipants: req.body.adultParticipants
-  });
-
   const _id = req.params._id;
 
-  user.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
+  User.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
       .then((data) => {
           if (!data) {
               res.status(404).send({
