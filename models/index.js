@@ -54,7 +54,29 @@ const userSchema = new Schema({
     },
 })
 
+const studentSchema = new Schema({
+    firstName: {
+        type: String,
+        required: [true, 'User first name required']
+    },
+    middleName: {
+        type: String
+    },
+    lastName: {
+        type: String,
+        required: [true, 'User last name required']
+    },
+    birthdate: {
+        type: Date
+    },
+    user_id: {
+        type: String,
+        required: [true, 'User ID required']
+    },
+})
+
 const User = mongoose.model('users', userSchema);
+const Student = mongoose.model('students', studentSchema);
 
 mongoose.Promise = global.Promise;
 
@@ -63,9 +85,10 @@ db.mongoose = mongoose;
 db.url = dbConfig.url;
 // db.users = require('./users.js')(mongoose);
 db.users = User;
+db.students = Student;
 
 
-const validateContact = (req, res, next) => {
+const validateUser = (req, res, next) => {
     const user = new User({
         firstName: req.body.firstName,
         middleName: req.body.middleName,
@@ -78,16 +101,6 @@ const validateContact = (req, res, next) => {
         adultParticipants: req.body.adultParticipants
     });
 
-    // user.firstName = req.body.firstName,
-    // user.middleName = req.body.middleName,
-    // user.lastName = req.body.lastName,
-    // user.username = req.body.username,
-    // user.password = req.body.password,
-    // user.email = req.body.email,
-    // user.phone = req.body.phone,
-    // user.juniorParticipants = req.body.juniorParticipants,
-    // user.adultParticipants = req.body.adultParticipants,
-
     let error = user.validateSync();
 
     if (error) {
@@ -97,11 +110,4 @@ const validateContact = (req, res, next) => {
     }
 }
 
-module.exports = db, validateContact;
-
-
-
-
-
-
-// module.exports = db;
+module.exports = db, validateUser;

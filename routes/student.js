@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const users = require('../controllers/user');
+const students = require('../controllers/student');
 
 const { auth } = require('express-openid-connect');
 
@@ -18,12 +18,12 @@ const { requiresAuth } = require('express-openid-connect');
 
 const validation = require('../middleware/validate');
 
-routes.get('/', requiresAuth(), users.getAllUsers);
-routes.get('/:_id', requiresAuth(), users.getUser);
+routes.get('/', requiresAuth(), students.getAllStudents);
+routes.get('/:_id', requiresAuth(), students.getStudent);
 
-routes.post('/', validation.validateUser, users.createUser);
-routes.put('/:_id', validation.validateUser, users.updateUser);
+routes.post('/', validation.validateStudent, students.createStudent);
+routes.put('/:_id', validation.validateStudent, students.updateStudent);
 
-routes.delete('/:_id', users.deleteUser);
+routes.delete('/:_id', students.deleteStudent);
 
 module.exports = routes;

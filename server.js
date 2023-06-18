@@ -41,29 +41,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-const { auth } = require('express-openid-connect');
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: process.env.BASE_URL,
-  clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.ISSUER_BASE_URL
-}
-
-app.use(auth(config));
-
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
-
-const { requiresAuth } = require('express-openid-connect');
-
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
-
 // const express = require('express');
 // const bodyParser = require('body-parser');
 // const mongodb = require('./db/connect');
