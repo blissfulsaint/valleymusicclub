@@ -10,7 +10,7 @@ After two internships learning React and Angular, and more recently learning abo
 If you are interested in the progress of this site, check back periodically for more updates!
 
 
-## About this repository
+# About this repository
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
