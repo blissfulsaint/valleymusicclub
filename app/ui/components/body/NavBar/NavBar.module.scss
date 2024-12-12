@@ -1,0 +1,44 @@
+.navicon {
+    background: #d3d3d3;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &::before, &::after {
+        background: #d3d3d3;
+        content: '';
+        display: block;
+        height: 100%;
+        position: absolute;
+        transition: all .2s ease-out;
+        width: 100%;
+    }
+
+    &::before {
+        top: 5px;
+    }
+
+    &::after {
+        top: -5px;
+    }
+}
+
+.naviconChecked {
+    background: transparent;
+
+    &::before {
+        transform: rotate(-45deg);
+        top: 0px;
+    }
+
+    &::after {
+        transform: rotate(45deg);
+        top: 0px;
+    }
+}
