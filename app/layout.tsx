@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { roboto } from "./ui/fonts";
-import "./ui/globals.css";
+import "./ui/globals.scss";
 import Header from "./ui/components/body/Header/Header";
 import Footer from "./ui/components/body/Footer/Footer";
 
