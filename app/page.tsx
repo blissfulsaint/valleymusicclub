@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Home | Valley Music Club',
 }
 
 export default function Home() {
