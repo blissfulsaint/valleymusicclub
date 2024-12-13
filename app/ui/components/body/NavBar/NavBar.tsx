@@ -51,9 +51,9 @@ export default function NavBar() {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
                 md:translate-x-0 md:static md:bg-transparent md:flex md:h-fit md:flex-row flex-wrap md:gap-y-0 gap-x-5 md:justify-end text-slate-300 md:my-6 md:p-0 md:pr-6 md:block md:transition-none`}
             >
-                {links.map((link) => {
+                {links.map((link, index) => {
                     return (
-                        <li className='hover:text-white cursor-pointer'>
+                        <li key={index} className='hover:text-white cursor-pointer'>
                             <Link
                                 href={link.href}
                             >
