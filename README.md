@@ -1,5 +1,5 @@
 # Valley Music Club
-Welcome to the frontend repository for the official Valley Music Club web page!
+Welcome to the repository for the full-stack code of the official Valley Music Club web page!
 
 This application is a work in progress, but is intended to eventually become the application through which music educators in the Phoenix, Arizona area can participate in Valley Music Club activities and festivals, as well as pay any related dues. 
 
