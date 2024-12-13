@@ -6,15 +6,18 @@ import Link from 'next/link';
 const links = [
     {
         pageTitle: 'Home',
-        href: '/'
+        href: '/',
+        ariaLabel: 'Valley Music Club Home',
     },
     {
         pageTitle: 'About Us',
-        href: '/about'
+        href: '/about',
+        ariaLabel: 'Learn about Valley Music Club',
     },
     {
         pageTitle: 'Login',
-        href: '/login'
+        href: '/login',
+        ariaLabel: 'Login or Create an Account',
     }
 ]
 
@@ -24,6 +27,10 @@ export default function NavBar() {
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+    };
+
+    const handleLinkClick = () => {
+        setIsOpen(false);
     };
 
     useEffect(() => {
@@ -44,6 +51,8 @@ export default function NavBar() {
             <div 
                 className='w-fit p-6 py-8 cursor-pointer float-right md:hidden'
                 onClick={toggleMenu}
+                aria-expanded={isOpen}
+                aria-controls='navbar-menu'
             ><span className={`${styles.navicon} ${isOpen ? styles.naviconChecked : ''}`}></span></div>
             <ul 
                 className={`fixed z-10 top-0 left-0 h-screen bg-zinc-900 p-8 pr-10 flex flex-col gap-y-5
@@ -54,9 +63,7 @@ export default function NavBar() {
                 {links.map((link, index) => {
                     return (
                         <li key={index} className='hover:text-white cursor-pointer'>
-                            <Link
-                                href={link.href}
-                            >
+                            <Link href={link.href} aria-label={link.ariaLabel} onClick={handleLinkClick}>
                                 {link.pageTitle}
                             </Link>
                         </li>

@@ -24,9 +24,14 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-roboto); /* Default to Roboto for body text */
+  font-family: var(--font-roboto);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair); /* Playfair for headings */
+  font-family: var(--font-playfair);
+  padding: .2em;
+}
+
+h1 {
+  font-size: 2.5em;
 }
