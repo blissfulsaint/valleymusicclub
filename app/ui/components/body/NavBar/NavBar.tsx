@@ -1,6 +1,22 @@
 'use client';
 import styles from './NavBar.module.scss';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+const links = [
+    {
+        pageTitle: 'Home',
+        href: '/'
+    },
+    {
+        pageTitle: 'About Us',
+        href: '/about'
+    },
+    {
+        pageTitle: 'Login',
+        href: '/login'
+    }
+]
 
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,10 +51,17 @@ export default function NavBar() {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
                 md:translate-x-0 md:static md:bg-transparent md:flex md:h-fit md:flex-row flex-wrap md:gap-y-0 gap-x-5 md:justify-end text-slate-300 md:my-6 md:p-0 md:pr-6 md:block md:transition-none`}
             >
-                <li className='hover:text-white cursor-pointer'>Example link</li>
-                <li className='hover:text-white cursor-pointer'>Example link</li>
-                <li className='hover:text-white cursor-pointer'>Example link</li>
-                <li className='hover:text-white cursor-pointer'>Example link</li>
+                {links.map((link) => {
+                    return (
+                        <li className='hover:text-white cursor-pointer'>
+                            <Link
+                                href={link.href}
+                            >
+                                {link.pageTitle}
+                            </Link>
+                        </li>
+                    )
+                })}
             </ul>
             {isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-9 cursor-pointer" onClick={toggleMenu}></div>}
         </nav>
