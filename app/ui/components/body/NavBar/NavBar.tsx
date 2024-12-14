@@ -47,7 +47,7 @@ export default function NavBar() {
     }, []);
 
     return (
-        <nav className='grow justify-end'>
+        <nav className='grow justify-end sticky top-0'>
             <div 
                 className='w-fit p-6 py-8 cursor-pointer float-right md:hidden'
                 onClick={toggleMenu}

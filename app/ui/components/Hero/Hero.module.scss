@@ -1,0 +1,17 @@
+.hero {
+    height: 100vh; /* Full screen height */
+    background-image: url('/studentgroup.jpeg');
+    background-size: cover;
+    background-attachment: fixed; /* Fixed attachment for natural parallax */
+    background-position: center;
+    position: relative;
+    will-change: transform; /* Optimize performance */
+
+    .h1 {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: white;
+    }
+}
+  
