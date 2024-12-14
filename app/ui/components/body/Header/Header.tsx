@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Header() {
     return (
-        <header className={styles.header}>
+        <header className={`${styles.header} sticky top-0`}>
             <Link href='/' aria-label='Valley Music Club Home'>
                 <Image 
                     src='/vmclogo-white-02.png'
