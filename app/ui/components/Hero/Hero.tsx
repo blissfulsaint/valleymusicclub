@@ -16,12 +16,12 @@ export default function Hero() {
     }, []);
 
     return (
-        <div
-            className={styles.hero}
-            style={{
-                transform: `translateY(${offsetY * 0.5}px)`,
-            }}
-        >
+        <div className={styles.hero}>
+            <div
+                style={{
+                    transform: `translateY(${offsetY * 0.5}px)`,
+                }}
+            ></div>
             <h1>Welcome to Valley Music Club!</h1>
         </div>
     );
