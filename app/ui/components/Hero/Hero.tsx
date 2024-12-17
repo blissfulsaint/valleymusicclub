@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import styles from './Hero.module.scss';
+import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
 export default function Hero() {
     const [offsetY, setOffsetY] = useState(0);
@@ -21,7 +22,13 @@ export default function Hero() {
                     transform: `translateY(${offsetY * 0.5}px)`,
                 }}
             ></div>
-            <h1>Welcome to Valley Music Club!</h1>
+            <div>
+                <LayoutBand>
+                    <div className="flex flex-col justify-center">
+                        <h1>Welcome to Valley Music Club!</h1>
+                    </div>
+                </LayoutBand>
+            </div>
         </div>
     );
 }

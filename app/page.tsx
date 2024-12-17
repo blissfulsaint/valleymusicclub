@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Hero from "./ui/components/Hero/Hero";
+import LayoutBand from "./ui/components/layout/LayoutBand/LayoutBand";
 
 export const metadata: Metadata = {
   title: 'Home | Valley Music Club',
@@ -9,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="max-w-screen-sm">
+      <LayoutBand>
         <p>
           Lorem ipsum odor amet, consectetuer adipiscing elit. Senectus pulvinar gravida porta facilisis natoque elementum sociosqu eu. Molestie cursus accumsan vitae hendrerit; hendrerit montes et eleifend eros. Elit phasellus metus vehicula; massa lacus congue sagittis. Etiam proin iaculis tortor ligula pulvinar ornare vehicula. Ante nam fermentum turpis ac nibh, blandit parturient senectus.
 
@@ -21,7 +22,7 @@ export default function Home() {
 
           Accumsan vivamus sociosqu aenean class mus tincidunt est penatibus sit. Nibh felis quam felis sagittis scelerisque? Nisi augue quam vestibulum enim gravida nisl maecenas lacinia. Id taciti sociosqu nascetur libero fusce nibh. Cras erat montes lobortis curabitur taciti, in primis efficitur. Curae condimentum mollis, lectus sem parturient in eget. Tristique himenaeos duis taciti feugiat suscipit; duis lacus mauris.
         </p>
-      </div>
+      </LayoutBand>
     </>
   );
 }
