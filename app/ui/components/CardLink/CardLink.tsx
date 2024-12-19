@@ -11,7 +11,7 @@ export default function CardLink({
     width = 'w-full',
     height = 'h-64',
     bgColor = 'bg-slate-400',
-}) {
+}: CardLinkProps) {
     return (
         <div className={`${colspan} ${width} ${height} ${bgColor} rounded-xl`}></div>
     )
