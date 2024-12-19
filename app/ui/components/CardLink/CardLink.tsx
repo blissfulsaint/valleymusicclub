@@ -12,9 +12,7 @@ export default function CardLink({
     height = 'h-64',
     bgColor = 'bg-slate-400',
 }: CardLinkProps) {
-    const mdColSpan = 'md:' + colspan;
-
     return (
-        <div className={`sm:col-span-1 ${mdColSpan} ${width} ${height} ${bgColor} rounded-xl`}></div>
+        <div className={`${colspan} ${width} ${height} ${bgColor} rounded-xl`}></div>
     )
 }
