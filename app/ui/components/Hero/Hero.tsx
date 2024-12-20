@@ -5,12 +5,12 @@ import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
 interface HeroProps {
     imgSrc?: string;
-    bgColor?: string;
+    twClassName?: string;
 }
 
 export default function Hero({
     imgSrc,
-    bgColor = 'bg-secondaryColor'
+    twClassName,
 }: HeroProps) {
     const [offsetY, setOffsetY] = useState(0);
 
@@ -26,7 +26,7 @@ export default function Hero({
     return (
         <div className={styles.hero}>
             <div
-                className={`${bgColor}`}
+                className={`bg-secondaryColor ${twClassName}`}
                 style={{
                     transform: `translateY(${offsetY * 0.5}px)`,
                     backgroundImage: `url('${imgSrc}')`

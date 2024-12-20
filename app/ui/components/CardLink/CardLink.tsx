@@ -2,9 +2,7 @@ import Link from "next/link";
 
 interface CardLinkProps {
     colspan?: string;
-    width?: string;
-    height?: string;
-    bgColor?: string;
+    twClassName?: string;
     imgSrc?: string;
     href?: string;
     title: string;
@@ -12,9 +10,7 @@ interface CardLinkProps {
 
 export default function CardLink({
     colspan = 'col-span-1',
-    width = 'w-full',
-    height = 'h-64',
-    bgColor = 'bg-slate-400',
+    twClassName,
     imgSrc,
     href = '#',
     title
@@ -23,7 +19,7 @@ export default function CardLink({
         <div className={`${colspan}`}>
             <Link href={href}>
             <div
-                    className={`${width} ${height} ${bgColor} rounded-xl overflow-hidden cursor-pointer relative`}
+                    className={`w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative ${twClassName}`}
                 >
                     <div
                         className="absolute inset-0 transition-transform transform scale-100 hover:scale-110"
