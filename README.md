@@ -9,6 +9,8 @@ After two internships learning React and Angular, and more recently learning abo
 
 If you are interested in the progress of this site, check back periodically for more updates!
 
+You can view the current deployment of the site by [clicking here](https://valleymusicclub.vercel.app/)!
+
 
 # About this repository
 
