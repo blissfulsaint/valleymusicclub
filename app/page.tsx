@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Hero />
+      <Hero imgSrc="/phoenix01.jpg" />
       <LayoutBand>
         <HomeDashboard />
       </LayoutBand>

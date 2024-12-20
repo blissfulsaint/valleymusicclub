@@ -3,7 +3,15 @@ import { useEffect, useState } from "react";
 import styles from './Hero.module.scss';
 import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
-export default function Hero() {
+interface HeroProps {
+    imgSrc?: string;
+    bgColor?: string;
+}
+
+export default function Hero({
+    imgSrc,
+    bgColor = 'bg-secondaryColor'
+}: HeroProps) {
     const [offsetY, setOffsetY] = useState(0);
 
     const handleScroll = () => {
@@ -18,8 +26,10 @@ export default function Hero() {
     return (
         <div className={styles.hero}>
             <div
+                className={`${bgColor}`}
                 style={{
                     transform: `translateY(${offsetY * 0.5}px)`,
+                    backgroundImage: `url('${imgSrc}')`
                 }}
             ></div>
             <div>
