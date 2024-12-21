@@ -5,6 +5,7 @@ interface CardLinkProps {
     twClassName?: string;
     imgSrc?: string;
     href?: string;
+    ariaLabel?: string;
     title: string;
 }
 
@@ -13,11 +14,12 @@ export default function CardLink({
     twClassName,
     imgSrc,
     href = '#',
-    title
+    ariaLabel,
+    title,
 }: CardLinkProps) {
     return (
         <div className={`${colspan}`}>
-            <Link href={href}>
+            <Link href={href} aria-label={ariaLabel}>
             <div
                     className={`w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative ${twClassName}`}
                 >
