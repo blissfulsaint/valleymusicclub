@@ -5,11 +5,13 @@ import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
 interface HeroProps {
     imgSrc?: string;
+    title: string;
     twClassName?: string;
 }
 
 export default function Hero({
     imgSrc,
+    title,
     twClassName,
 }: HeroProps) {
     const [offsetY, setOffsetY] = useState(0);
@@ -35,7 +37,7 @@ export default function Hero({
             <div>
                 <LayoutBand>
                     <div className="flex flex-col justify-center">
-                        <h1>Welcome to Valley Music Club!</h1>
+                        <h1 className="m-0">{title}</h1>
                     </div>
                 </LayoutBand>
             </div>

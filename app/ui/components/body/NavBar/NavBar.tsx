@@ -11,12 +11,12 @@ const links = [
     },
     {
         pageTitle: 'About Us',
-        href: '/about',
+        href: '/page-in-development',
         ariaLabel: 'Learn about Valley Music Club',
     },
     {
         pageTitle: 'Login',
-        href: '/login',
+        href: '/page-in-development',
         ariaLabel: 'Login or Create an Account',
     }
 ]

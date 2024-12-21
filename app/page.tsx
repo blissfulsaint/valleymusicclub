@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Hero imgSrc="/phoenix01.jpg" />
+      <Hero imgSrc="/phoenix01.jpg" title="Welcome to Valley Music Club!" />
       <LayoutBand>
         <HomeDashboard />
       </LayoutBand>
