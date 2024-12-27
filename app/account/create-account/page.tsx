@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: 'Create an Account',
 }
 
-export default function Login() {
+export default function CreateAccount() {
     return (
         <LayoutBand>
             <h1>This is the Create Account Page!</h1>
