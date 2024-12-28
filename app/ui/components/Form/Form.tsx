@@ -1,5 +1,5 @@
 interface FormProps {
-    action: string;
+    action: any;
     children: React.ReactNode;
 }
 
