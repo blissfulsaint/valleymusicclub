@@ -1,5 +1,5 @@
 interface FormProps {
-    action: any;
+    action: ((payload: FormData) => void) | string;
     children: React.ReactNode;
 }
 

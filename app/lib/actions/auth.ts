@@ -1,6 +1,10 @@
 'use server';
 
 import { z } from 'zod';
+import { sql } from '@vercel/postgres';
+import { User } from '../db/definitions';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const AccountFormSchema = z.object({
     user_id: z.string(),
@@ -33,7 +37,7 @@ export type AuthState = {
         password?: string[];
         phone?: string[];
     };
-    message?: string | null;
+    message: string;
 }
 
 const AuthenticateUser = AccountFormSchema.omit({
@@ -44,11 +48,37 @@ const AuthenticateUser = AccountFormSchema.omit({
     phone: true,
 })
 
-export async function authenticateUser(prevState: void, formData: FormData) {
+export async function authenticateUser(prevState: AuthState, formData: FormData) {
     const validatedFields = AuthenticateUser.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),
     });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Login.'
+        };
+    }
+
+    const { email, password } = validatedFields.data
+
+    try {
+        const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email} AND password=${password}`;
+        if (user.rows[0]) {
+            return { message: `Welcome, ${user.rows[0]['first_name']}!`};
+        } else {
+            return { message: 'Login failed.'};
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            message: 'Database Error: Failed to Login.'
+        };
+    }
+    
+    revalidatePath('/');
+    redirect('/');
 }
 
 export async function createUser() {

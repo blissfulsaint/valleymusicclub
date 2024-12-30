@@ -24,7 +24,7 @@ export default function CardLink({
                     className={`w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative ${twClassName}`}
                 >
                     <div
-                        className="absolute inset-0 transition-transform transform scale-100 hover:scale-110"
+                        className="absolute inset-0 transition-transform transform scale-100 hover:scale-110 text-white"
                         style={{
                             backgroundImage: `url('${imgSrc}')`,
                             backgroundSize: 'cover',
