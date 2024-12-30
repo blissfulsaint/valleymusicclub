@@ -62,7 +62,7 @@ export default function NavBar() {
             >
                 {links.map((link, index) => {
                     return (
-                        <li key={index} className='hover:text-white cursor-pointer'>
+                        <li key={index} className='hover:text-white cursor-pointer transition duration 150'>
                             <Link href={link.href} aria-label={link.ariaLabel} onClick={handleLinkClick}>
                                 {link.pageTitle}
                             </Link>
