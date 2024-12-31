@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 export default function Login() {
     return (
         <LayoutBand>
-            <h1>This is the Login Page!</h1>
             <LoginForm></LoginForm>
         </LayoutBand>
     )

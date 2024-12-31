@@ -9,18 +9,20 @@ import { redirect } from 'next/navigation';
 const AccountFormSchema = z.object({
     user_id: z.string(),
     first_name: z.string({
+        required_error: 'Please provide a first name',
         invalid_type_error: 'Please provide a valid first name',
     }),
     middle_name: z.string({
         invalid_type_error: 'Please provide a valid middle name',
     }).optional(),
     last_name: z.string({
+        required_error: 'Please provide a last name',
         invalid_type_error: 'Please provide a valid last name',
     }),
-    email: z.string({
-        invalid_type_error: 'Please provide a valid email address',
-    }).email(),
-    password: z.string(),
+    email: z.string()
+        .email('Please provide a valid email address'),
+    password: z.string()
+        .min(1, 'Please provide a password'),
     phone: z.string().regex(
         /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
         "Invalid phone number format"
@@ -57,7 +59,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing Fields. Failed to Login.'
+            message: 'Missing or Invalid Fields. Failed to Login.'
         };
     }
 
@@ -68,7 +70,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         if (user.rows[0]) {
             return { message: `Welcome, ${user.rows[0]['first_name']}!`};
         } else {
-            return { message: 'Login failed.'};
+            return { message: 'The email and/or password you entered was invalid. Please try again or create an account.'};
         }
     } catch (error) {
         console.log(error);

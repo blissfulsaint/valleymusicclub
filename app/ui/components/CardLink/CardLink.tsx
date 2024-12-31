@@ -24,14 +24,14 @@ export default function CardLink({
                     className={`w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative ${twClassName}`}
                 >
                     <div
-                        className="absolute inset-0 transition-transform transform scale-100 hover:scale-110 text-white"
+                        className="absolute inset-0 transition-transform transform scale-100 hover:scale-110"
                         style={{
                             backgroundImage: `url('${imgSrc}')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
                     ></div>
-                    <p className="absolute bottom-0 left-0 w-full text-center p-2 py-3 text-xl bg-primaryColor">{title}</p>
+                    <p className="absolute bottom-0 left-0 w-full text-center p-2 py-3 text-xl bg-primaryColor text-white">{title}</p>
                 </div>
             </Link>
         </div>
