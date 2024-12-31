@@ -1,8 +1,9 @@
 import Link from "next/link";
+import clsx from "clsx";
 
 interface CardLinkProps {
     colspan?: string;
-    twClassName?: string;
+    className?: string;
     imgSrc?: string;
     href?: string;
     ariaLabel?: string;
@@ -11,7 +12,7 @@ interface CardLinkProps {
 
 export default function CardLink({
     colspan = 'col-span-1',
-    twClassName,
+    className,
     imgSrc,
     href = '#',
     ariaLabel,
@@ -20,8 +21,11 @@ export default function CardLink({
     return (
         <div className={`${colspan}`}>
             <Link href={href} aria-label={ariaLabel}>
-            <div
-                    className={`w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative ${twClassName}`}
+                <div
+                    className={clsx(
+                        'w-full h-64 bg-slate-400 rounded-xl overflow-hidden cursor-pointer relative',
+                        className,
+                    )}
                 >
                     <div
                         className="absolute inset-0 transition-transform transform scale-100 hover:scale-110"

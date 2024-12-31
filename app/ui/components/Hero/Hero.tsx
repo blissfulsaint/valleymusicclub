@@ -1,18 +1,19 @@
 'use client';
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 import styles from './Hero.module.scss';
 import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
 interface HeroProps {
     imgSrc?: string;
     title: string;
-    twClassName?: string;
+    className?: string;
 }
 
 export default function Hero({
     imgSrc,
     title,
-    twClassName,
+    className,
 }: HeroProps) {
     const [offsetY, setOffsetY] = useState(0);
 
@@ -28,7 +29,10 @@ export default function Hero({
     return (
         <div className={styles.hero}>
             <div
-                className={`bg-secondaryColor ${twClassName}`}
+                className={clsx(
+                    'bg-secondaryColor',
+                    className,
+                )}
                 style={{
                     transform: `translateY(${offsetY * 0.5}px)`,
                     backgroundImage: `url('${imgSrc}')`
