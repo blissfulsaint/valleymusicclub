@@ -12,12 +12,17 @@
   --foreground: #171717;
   --font-playfair: 'Playfair Display', serif;
   --font-roboto: 'Roboto', sans-serif;
+
+  // Variable to assist in dark mode visibility when primary color is used for text
+  // or other low contrast elements
+  --primary-secondary: #1F6B8E;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary-secondary: #71B4C7;
   }
 }
 

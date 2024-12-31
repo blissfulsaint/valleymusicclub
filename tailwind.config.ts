@@ -16,6 +16,8 @@ export default {
         tertiaryColor: "var(--tertiary-color)",
         accent1: "var(--accent1)",
         accent2: "var(--accent2)",
+        
+        primarySecondary: "var(--primary-secondary)",
       },
     },
   },
