@@ -1,7 +1,13 @@
 'use client';
 
 import { useActionState } from "react"
-import Form from "@/app/ui/components/Form/Form"
+import Form from "@/app/ui/components/vmc-form/Form/Form"
+import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset";
+import OutlineFieldsetLegend from "../../vmc-form/OutlineFieldsetLegend/OutlineFieldsetLegend";
+import InputContainer from "../../vmc-form/InputContainer/InputContainer";
+import OutlineInput from "../../vmc-form/Input/Input";
+import FormButton from "../../vmc-form/FormButton/FormButton";
+import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
 import Separator from "../../layout/Separator/Separator";
 import PageLink from "../../PageLink/PageLink";
 import { authenticateUser, AuthState } from "@/app/lib/actions/auth";
@@ -17,65 +23,55 @@ export default function LoginForm() {
         <>
             <Separator size="sm" />
             <Form action={formAction}>
-                <fieldset className="rounded-xl border-solid border-2 border-primarySecondary max-w-md p-4 m-auto">
-                    <legend className="px-2 text-lg text-primarySecondary">Login to Valley Music Club</legend>
+                <OutlineFieldset>
+                    <OutlineFieldsetLegend>Login to Valley Music Club</OutlineFieldsetLegend>
                     <div id="form-error" aria-live="polite" aria-atomic="true">
                         {state.message && (
-                            <p className="p-0 my-1 text-sm text-red-500" key={state.message}>
+                            <StatusMessage status="error" key={state.message}>
                                 {state.message}
-                            </p>
+                            </StatusMessage>
                         )}
                     </div>
-                    <div className="mb-3">
+                    <InputContainer>
                         <label htmlFor="email">Email</label>
-                        <input 
+                        <OutlineInput 
                             id="email"
                             name="email"
                             type="email"
                             placeholder="johnsmith@example.com"
-                            className="block border border-primarySecondary rounded-md px-2 py-1 w-full bg-background"
-                            // required
                             aria-describedby="email-error"
                         />
                         <div id="email-error" aria-live="polite" aria-atomic="true">
                             {state.errors?.email &&
                                 state.errors.email.map((error: string) => (
-                                    <p className="p-0 my-1 text-sm text-red-500" key={error}>
+                                    <StatusMessage status="error" key={error}>
                                         {error}
-                                    </p>
+                                    </StatusMessage>
                                 ))
                             }
                         </div>
-                    </div>
-                    <div className="mb-3">
+                    </InputContainer>
+                    <InputContainer>
                         <label htmlFor="password">Password</label>
-                        <input 
+                        <OutlineInput 
                             type="password"
                             id="password"
                             name="password"
-                            className="block border border-primarySecondary rounded-md px-2 py-1 w-full bg-background"
-                            // required
                             aria-describedby="email-error"
                         />
                         <div id="password-error" aria-live="polite" aria-atomic="true">
                             {state.errors?.password &&
                                 state.errors.password.map((error: string) => (
-                                    <p className="p-0 my-1 text-sm text-red-500" key={error}>
+                                    <StatusMessage status="error" key={error}>
                                         {error}
-                                    </p>
+                                    </StatusMessage>
                                 ))
                             }
                         </div>
-                    </div>
-                    <button 
-                        type="submit" 
-                        className="px-2 py-1 bg-primaryColor text-white w-full rounded-md hover:bg-slate-200 hover:text-primaryColor transition duration 150"
-                        disabled={isPending}
-                    >
-                        Login
-                    </button>
+                    </InputContainer>
+                    <FormButton type="submit" disabled={isPending}>Login</FormButton>
                     <PageLink href='/account/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
-                </fieldset>
+                </OutlineFieldset>
             </Form>
         </>
     )

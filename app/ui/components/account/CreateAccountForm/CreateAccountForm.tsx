@@ -1,7 +1,7 @@
 'use client';
 
 // import { useActionState } from "react"
-import Form from "@/app/ui/components/Form/Form"
+import Form from "@/app/ui/components/vmc-form/Form/Form"
 // import { createUser, AuthState } from "@/app/lib/actions/auth"
 
 export default function CreateAccountForm() {
