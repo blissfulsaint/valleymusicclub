@@ -3,7 +3,7 @@
 import { useActionState } from "react"
 import Form from "@/app/ui/components/Form/Form"
 import Separator from "../../layout/Separator/Separator";
-import Link from "next/link";
+import PageLink from "../../PageLink/PageLink";
 import { authenticateUser, AuthState } from "@/app/lib/actions/auth";
 
 export default function LoginForm() {
@@ -74,7 +74,7 @@ export default function LoginForm() {
                     >
                         Login
                     </button>
-                    <Link className="text-accent1 block w-fit mx-auto mt-1 hover:underline" href='/account/create-account'>Don&#39;t have an account? Create one here!</Link>
+                    <PageLink href='/account/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
                 </fieldset>
             </Form>
         </>
