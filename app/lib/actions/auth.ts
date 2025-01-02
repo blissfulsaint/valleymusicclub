@@ -126,7 +126,8 @@ export async function createUser(prevState: AuthState, formData: FormData) {
         };
     }
 
-    const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
+    // const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
+    const { email } = validatedFields.data; // Temporary code while other variables are not in use
 
     try {
         const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
