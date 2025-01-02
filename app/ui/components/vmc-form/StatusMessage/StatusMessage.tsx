@@ -2,7 +2,13 @@ import clsx from "clsx"
 
 interface StatusMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {
     children?: React.ReactNode;
-    status: 'success' | 'error';
+    status: 'success' | 'error' | 'warning' | string;
+}
+
+const statusClasses: Record<string, string> = {
+    success: 'text-green-500',
+    error: 'text-red-500',
+    warning: 'text-yellow-500',
 }
 
 export default function StatusMessage({
@@ -16,8 +22,7 @@ export default function StatusMessage({
             {...rest}
             className={clsx(
                 'p-0 my-1 text-sm',
-                status === 'error' && 'text-red-500',
-                status === 'success' && 'text-green-500',
+                statusClasses[status] || 'text-white',
                 className
             )}
         >

@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 export default function CreateAccount() {
     return (
         <LayoutBand>
-            <h1>This is the Create Account Page!</h1>
             <CreateAccountForm></CreateAccountForm>
         </LayoutBand>
     )

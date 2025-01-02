@@ -13,7 +13,7 @@ import PageLink from "../../PageLink/PageLink";
 import { authenticateUser, AuthState } from "@/app/lib/actions/auth";
 
 export default function LoginForm() {
-    const initialState: AuthState = { message: '', errors: {}}
+    const initialState: AuthState = { message: {status: 'none', text: ''}, errors: {}}
     const [state, formAction, isPending] = useActionState(
         authenticateUser,
         initialState,
@@ -26,9 +26,9 @@ export default function LoginForm() {
                 <OutlineFieldset>
                     <OutlineFieldsetLegend>Login to Valley Music Club</OutlineFieldsetLegend>
                     <div id="form-error" aria-live="polite" aria-atomic="true">
-                        {state.message && (
-                            <StatusMessage status="error" key={state.message}>
-                                {state.message}
+                        {state.message.text && (
+                            <StatusMessage status={state.message.status} key={state.message.text}>
+                                {state.message.text}
                             </StatusMessage>
                         )}
                     </div>

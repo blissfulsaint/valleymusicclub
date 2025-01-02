@@ -39,7 +39,10 @@ export type AuthState = {
         password?: string[];
         phone?: string[];
     };
-    message: string;
+    message: {
+        status: string;
+        text: string;
+    };
 }
 
 const AuthenticateUser = AccountFormSchema.omit({
@@ -59,7 +62,10 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing or Invalid Fields. Failed to Login.'
+            message: {
+                status: 'error',
+                text: 'Missing or Invalid Fields. Failed to Login.',
+            },
         };
     }
 
@@ -68,14 +74,27 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     try {
         const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email} AND password=${password}`;
         if (user.rows[0]) {
-            return { message: `Welcome, ${user.rows[0]['first_name']}!`};
+            return {
+                message: {
+                    status: 'success',
+                    text: `Welcome, ${user.rows[0]['first_name']}!`
+                }
+            };
         } else {
-            return { message: 'The email and/or password you entered was invalid. Please try again or create an account.'};
+            return {
+                message: {
+                    status: 'error',
+                    text: 'The email and/or password you entered was invalid. Please try again or create an account.',
+                }
+            };
         }
     } catch (error) {
         console.log(error);
         return {
-            message: 'Database Error: Failed to Login.'
+            message: {
+                status: 'error',
+                text: 'Database Error: Failed to Login.'
+            }
         };
     }
     
@@ -83,6 +102,58 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     redirect('/');
 }
 
-export async function createUser() {
+const CreateUser = AccountFormSchema.omit({
+    user_id: true,
+})
 
+export async function createUser(prevState: AuthState, formData: FormData) {
+    const validatedFields = CreateUser.safeParse({
+        first_name: formData.get('first_name'),
+        middle_name: formData.get('middle_name'),
+        last_name: formData.get('last_name'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        phone: formData.get('phone'),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: {
+                status: 'error',
+                text: 'Missing or Invalid Fields. Failed to create account.'
+            }
+        };
+    }
+
+    // const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
+    const { email } = validatedFields.data; // Temporary code while other variables are not in use
+
+    try {
+        const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
+        console.log(duplicateEmail);
+        if (duplicateEmail.rows[0].count > 0) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'The email address submitted is already associated with another account. Please use a different email address.'
+                }
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Database error. Failed to create account.'
+            }
+        }
+    }
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Account Creation Initiated'
+        }
+    }
 }
