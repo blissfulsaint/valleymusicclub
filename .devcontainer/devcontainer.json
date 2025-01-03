@@ -1,0 +1,10 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "forwardPorts": [3000],
+  "appPort": [3000],
+  "remoteUser": "node",
+  "postCreateCommand": "pnpm install",
+  "onCreateCommand": "pnpm dev",
+  "features": {
+  }
+}
