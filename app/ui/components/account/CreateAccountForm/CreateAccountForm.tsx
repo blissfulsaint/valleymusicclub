@@ -128,9 +128,10 @@ export default function CreateAccountForm() {
                     <InputContainer>
                         <label htmlFor="phone">Phone Number</label>
                         <OutlineInput 
-                            type="phone"
+                            type="tel"
                             id="phone"
                             name="phone"
+                            placeholder="(123) 456-7890"
                             aria-describedby="phone-error"
                         />
                         <div id="phone-error" aria-live="polite" aria-atomic="true">

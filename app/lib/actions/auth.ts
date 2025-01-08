@@ -9,24 +9,26 @@ import { redirect } from 'next/navigation';
 const AccountFormSchema = z.object({
     user_id: z.string(),
     first_name: z.string({
-        required_error: 'Please provide a first name',
         invalid_type_error: 'Please provide a valid first name',
-    }),
+    })
+        .min(1, 'Please provide a first name'),
     middle_name: z.string({
         invalid_type_error: 'Please provide a valid middle name',
     }).optional(),
     last_name: z.string({
-        required_error: 'Please provide a last name',
         invalid_type_error: 'Please provide a valid last name',
-    }),
+    })
+        .min(1, 'Please provide a first name'),
     email: z.string()
         .email('Please provide a valid email address'),
     password: z.string()
         .min(1, 'Please provide a password'),
-    phone: z.string().regex(
-        /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
-        "Invalid phone number format"
-    ).optional(),
+    phone: z.string()
+        .regex(
+          /^$|^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
+          "Please provide a valid phone number"
+        )
+        .optional()
 });
 
 export type AuthState = {
