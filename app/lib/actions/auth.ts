@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
 import { sql } from '@vercel/postgres';
 import { User } from '../db/definitions';
 import { revalidatePath } from 'next/cache';
@@ -22,7 +23,7 @@ const AccountFormSchema = z.object({
     email: z.string()
         .email('Please provide a valid email address'),
     password: z.string()
-        .min(1, 'Please provide a password'),
+        .min(8, 'Please provide a password longer than 8 characters'),
     phone: z.string()
         .regex(
           /^$|^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
@@ -128,12 +129,13 @@ export async function createUser(prevState: AuthState, formData: FormData) {
         };
     }
 
-    // const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
-    const { email } = validatedFields.data; // Temporary code while other variables are not in use
+    const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
+    // const { email } = validatedFields.data; // Temporary code while other variables are not in use
 
     try {
         const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
-        console.log(duplicateEmail);
+        const duplicatePhone = await sql`SELECT COUNT(*) FROM dev.test_user WHERE phone = ${phone}`;
+        
         if (duplicateEmail.rows[0].count > 0) {
             return {
                 message: {
@@ -141,7 +143,23 @@ export async function createUser(prevState: AuthState, formData: FormData) {
                     text: 'The email address submitted is already associated with another account. Please use a different email address.'
                 }
             }
-        }
+        };
+
+        if (duplicatePhone.rows[0].count > 0) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'The phone number submitted is already associated with another account. Please use a different phone number.'
+                }
+            }
+        };
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await sql`
+            INSERT INTO dev.test_user (first_name, middle_name, last_name, email, password, phone)
+            VALUES (${first_name}, ${middle_name}, ${last_name}, ${email}, ${hashedPassword}, ${phone})
+        `
     } catch (error) {
         console.log(error);
         return {
