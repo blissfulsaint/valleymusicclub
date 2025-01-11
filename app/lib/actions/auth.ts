@@ -75,22 +75,25 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     const { email, password } = validatedFields.data
 
     try {
-        const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email} AND password=${password}`;
+        const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email}`;
         if (user.rows[0]) {
-            return {
-                message: {
-                    status: 'success',
-                    text: `Welcome, ${user.rows[0]['first_name']}!`
-                }
-            };
-        } else {
-            return {
-                message: {
-                    status: 'error',
-                    text: 'The email and/or password you entered was invalid. Please try again or create an account.',
-                }
-            };
+            const isPasswordValid = await bcrypt.compare(password, user.rows[0].password)
+            if (isPasswordValid) {
+                return {
+                    message: {
+                        status: 'success',
+                        text: `Welcome, ${user.rows[0]['first_name']}!`
+                    }
+                };
+            }
         }
+        
+        return {
+            message: {
+                status: 'error',
+                text: 'The email and/or password you entered was invalid. Please try again or create an account.',
+            }
+        };
     } catch (error) {
         console.log(error);
         return {
@@ -130,7 +133,6 @@ export async function createUser(prevState: AuthState, formData: FormData) {
     }
 
     const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
-    // const { email } = validatedFields.data; // Temporary code while other variables are not in use
 
     try {
         const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
