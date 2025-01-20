@@ -1,3 +1,7 @@
+// Adapted from Flowbite.com's spinner component
+// Original source: https://flowbite.com/docs/components/spinner/
+// Modifications: Adjusted styles and added custom color animations
+
 export default function LoadingSpinner() {
     return (
         <div role="status" className="flex justify-center">
