@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import LayoutBand from "../ui/components/layout/LayoutBand/LayoutBand"
+import { LayoutBand } from "blisskit-ui"
 import PageLink from "../ui/components/PageLink/PageLink"
 
 export const metadata: Metadata = {

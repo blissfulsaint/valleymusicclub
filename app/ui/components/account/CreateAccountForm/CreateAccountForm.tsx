@@ -1,6 +1,8 @@
 'use client';
 
 import { useActionState } from "react"
+import { Separator } from "blisskit-ui";
+import { createUser, AuthState } from "@/app/lib/actions/auth";
 import Form from "@/app/ui/components/vmc-form/Form/Form"
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset";
 import OutlineFieldsetLegend from "../../vmc-form/OutlineFieldsetLegend/OutlineFieldsetLegend";
@@ -8,9 +10,7 @@ import InputContainer from "../../vmc-form/InputContainer/InputContainer";
 import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
 import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
-import Separator from "../../layout/Separator/Separator";
 import PageLink from "../../PageLink/PageLink";
-import { createUser, AuthState } from "@/app/lib/actions/auth";
 
 export default function CreateAccountForm() {
     const initialState: AuthState = { message: {status: 'none', text: ''}, errors: {}}

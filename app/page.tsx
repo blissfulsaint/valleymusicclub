@@ -1,6 +1,6 @@
 import { Metadata } from "next";
+import { LayoutBand } from "blisskit-ui";
 import Hero from "./ui/components/Hero/Hero";
-import LayoutBand from "./ui/components/layout/LayoutBand/LayoutBand";
 import HomeDashboard from "./ui/components/HomeDashboard/HomeDashboard";
 
 export const metadata: Metadata = {

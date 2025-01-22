@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
+import { LayoutBand } from "blisskit-ui";
 import clsx from "clsx";
 import styles from './Hero.module.scss';
-import LayoutBand from "../layout/LayoutBand/LayoutBand";
 
 interface HeroProps {
     imgSrc?: string;
