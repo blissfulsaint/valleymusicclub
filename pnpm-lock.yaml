@@ -15,8 +15,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       blisskit-ui:
-        specifier: ^1.0.1
-        version: 1.0.1(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.82.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^1.1.2
+        version: 1.1.2(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.82.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -631,8 +631,8 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
-  blisskit-ui@1.0.1:
-    resolution: {integrity: sha512-FExUK+MT3gdNlJlx5hCUrZyvbiMuz0B8O0a25D0otpoXBOlMD+Ky500uubxX5vxNymBY3C5a0+n9idczPJ5VRQ==}
+  blisskit-ui@1.1.2:
+    resolution: {integrity: sha512-L240PUKFA1PXATyvoWeTN9VjoJdH0g0xHf5u4TNtxoi8Ye/6go/P3uXDhMtSwXyKmHSMye7IFKp9TSL57dhx1Q==}
     peerDependencies:
       next: ^14.0.0 || ^15.0.0
       react: ^18.0.0 || ^19.0.0
@@ -2583,8 +2583,9 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
-  blisskit-ui@1.0.1(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.82.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  blisskit-ui@1.1.2(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.82.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
+      clsx: 2.1.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
     optionalDependencies:
@@ -2908,7 +2909,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.0(eslint@9.16.0(jiti@1.21.6))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.16.0(jiti@1.21.6)))(eslint@9.16.0(jiti@1.21.6)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.0(eslint@9.16.0(jiti@1.21.6))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.16.0(jiti@1.21.6)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -2930,7 +2931,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.16.0(jiti@1.21.6)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.0(eslint@9.16.0(jiti@1.21.6))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.16.0(jiti@1.21.6)))(eslint@9.16.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.0(eslint@9.16.0(jiti@1.21.6))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.16.0(jiti@1.21.6))
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
