@@ -6,9 +6,10 @@ import { sql } from '@vercel/postgres';
 import { User } from '../db/definitions';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { generateToken } from '../utils/jwt';
 
 const AccountFormSchema = z.object({
-    user_id: z.string(),
+    id: z.string(),
     first_name: z.string({
         invalid_type_error: 'Please provide a valid first name',
     })
@@ -34,7 +35,7 @@ const AccountFormSchema = z.object({
 
 export type AuthState = {
     errors?: {
-        user_id?: string[];
+        id?: string[];
         first_name?: string[];
         middle_name?: string[];
         last_name?: string[];
@@ -49,7 +50,7 @@ export type AuthState = {
 }
 
 const AuthenticateUser = AccountFormSchema.omit({
-    user_id: true,
+    id: true,
     first_name: true,
     middle_name: true,
     last_name: true,
@@ -76,22 +77,33 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
 
     try {
         const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email}`;
+
         if (user.rows[0]) {
             const isPasswordValid = await bcrypt.compare(password, user.rows[0].password)
+
             if (isPasswordValid) {
-                return {
+                const token = generateToken({ id: user.rows[0].id, email });
+
+                const response = new Response(JSON.stringify({
                     message: {
                         status: 'success',
                         text: `Welcome, ${user.rows[0]['first_name']}!`
                     }
-                };
+                }))
+
+                response.headers.append(
+                    'Set-Cookie',
+                    `auth_token=${token}; HttpOnly; Path=/; Secure`
+                );
+
+                return response;
             }
         }
         
         return {
             message: {
                 status: 'error',
-                text: 'The email and/or password you entered was invalid. Please try again or create an account.',
+                text: 'Invalid email or password.',
             }
         };
     } catch (error) {
@@ -109,7 +121,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
 }
 
 const CreateUser = AccountFormSchema.omit({
-    user_id: true,
+    id: true,
 })
 
 export async function createUser(prevState: AuthState, formData: FormData) {
@@ -142,7 +154,7 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             return {
                 message: {
                     status: 'error',
-                    text: 'The email address submitted is already associated with another account. Please use a different email address.'
+                    text: 'Email is already in use.'
                 }
             }
         };
@@ -151,17 +163,35 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             return {
                 message: {
                     status: 'error',
-                    text: 'The phone number submitted is already associated with another account. Please use a different phone number.'
+                    text: 'Phone number is already in use.'
                 }
             }
         };
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await sql`
+        const newUser = await sql`
             INSERT INTO dev.test_user (first_name, middle_name, last_name, email, password, phone)
             VALUES (${first_name}, ${middle_name}, ${last_name}, ${email}, ${hashedPassword}, ${phone})
+            RETURNING id, email
         `
+
+        const token = generateToken({ id: newUser.rows[0].id, email});
+
+        const response = new Response(JSON.stringify({
+            message: {
+                status: 'success',
+                text: 'Account Created Successfully'
+            }
+        }));
+
+        // Set JWT token
+        response.headers.append(
+            'Set-Cookie',
+            `auth_token=${token}; HttpOnly; Path=/; Secure`
+        );
+
+        return response;
     } catch (error) {
         console.log(error);
         return {
@@ -171,11 +201,20 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             }
         }
     }
+}
 
-    return {
+export async function logoutUser() {
+    const response = new Response(JSON.stringify({
         message: {
             status: 'success',
-            text: 'Account Creation Initiated'
+            text: 'Logged out successfully.'
         }
-    }
+    }));
+
+    response.headers.append(
+        'Set-Cookie',
+        'auth_token=; HttpOnly; Path=/; Secure; Max-Age=0'
+    );
+
+    return response;
 }
