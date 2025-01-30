@@ -7,6 +7,7 @@ import { User } from '../db/definitions';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { generateToken } from '../utils/jwt';
+import { cookies } from 'next/headers';
 
 const AccountFormSchema = z.object({
     id: z.string(),
@@ -84,19 +85,18 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
             if (isPasswordValid) {
                 const token = generateToken({ id: user.rows[0].id, email });
 
-                const response = new Response(JSON.stringify({
+                (await cookies()).set('auth_token', token, {
+                    httpOnly: true,
+                    path: '/',
+                    secure: process.env.NODE_ENV === 'production',
+                })
+
+                return {
                     message: {
                         status: 'success',
-                        text: `Welcome, ${user.rows[0]['first_name']}!`
-                    }
-                }))
-
-                response.headers.append(
-                    'Set-Cookie',
-                    `auth_token=${token}; HttpOnly; Path=/; Secure`
-                );
-
-                return response;
+                        text: `Welcome, ${user.rows[0]['first_name']}!`,
+                    },
+                };
             }
         }
         
@@ -178,20 +178,18 @@ export async function createUser(prevState: AuthState, formData: FormData) {
 
         const token = generateToken({ id: newUser.rows[0].id, email});
 
-        const response = new Response(JSON.stringify({
+        (await cookies()).set('auth_token', token, {
+            httpOnly: true,
+            path: '/',
+            secure: process.env.NODE_ENV === 'production',
+        })
+
+        return {
             message: {
                 status: 'success',
-                text: 'Account Created Successfully'
+                text: 'Account Created Successfully!',
             }
-        }));
-
-        // Set JWT token
-        response.headers.append(
-            'Set-Cookie',
-            `auth_token=${token}; HttpOnly; Path=/; Secure`
-        );
-
-        return response;
+        }
     } catch (error) {
         console.log(error);
         return {
@@ -204,17 +202,17 @@ export async function createUser(prevState: AuthState, formData: FormData) {
 }
 
 export async function logoutUser() {
-    const response = new Response(JSON.stringify({
+    (await cookies()).set('auth_token', '', {
+        httpOnly: true,
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 0, // Immediately expires
+    });
+
+    return {
         message: {
             status: 'success',
-            text: 'Logged out successfully.'
-        }
-    }));
-
-    response.headers.append(
-        'Set-Cookie',
-        'auth_token=; HttpOnly; Path=/; Secure; Max-Age=0'
-    );
-
-    return response;
+            text: 'Logged out successfully.',
+        },
+    };
 }
