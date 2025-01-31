@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { generateToken } from '../utils/jwt';
 import { cookies } from 'next/headers';
+import { verifyToken } from '../utils/jwt';
 
 const AccountFormSchema = z.object({
     id: z.string(),
@@ -79,33 +80,34 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     try {
         const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email}`;
 
-        if (user.rows[0]) {
-            const isPasswordValid = await bcrypt.compare(password, user.rows[0].password)
-
-            if (isPasswordValid) {
-                const token = generateToken({ id: user.rows[0].id, email });
-
-                (await cookies()).set('auth_token', token, {
-                    httpOnly: true,
-                    path: '/',
-                    secure: process.env.NODE_ENV === 'production',
-                })
-
-                return {
-                    message: {
-                        status: 'success',
-                        text: `Welcome, ${user.rows[0]['first_name']}!`,
-                    },
-                };
-            }
+        if (!user.rows[0]) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Invalid email or password.',
+                },
+            };
         }
-        
-        return {
-            message: {
-                status: 'error',
-                text: 'Invalid email or password.',
-            }
-        };
+
+        const isPasswordValid = await bcrypt.compare(password, user.rows[0].password);
+
+        if (!isPasswordValid) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Invalid email or password.',
+                },
+            };
+        }
+
+        // ✅ Set the auth token
+        const token = generateToken({ id: user.rows[0].id, email });
+
+        (await cookies()).set('auth_token', token, {
+            httpOnly: true,
+            path: '/',
+            secure: process.env.NODE_ENV === 'production',
+        });
     } catch (error) {
         console.log(error);
         return {
@@ -116,8 +118,8 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         };
     }
     
-    revalidatePath('/');
-    redirect('/');
+    revalidatePath('/account');
+    redirect('/account');
 }
 
 const CreateUser = AccountFormSchema.omit({
@@ -184,6 +186,9 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             secure: process.env.NODE_ENV === 'production',
         })
 
+        revalidatePath('/account');
+        redirect('/account');
+
         return {
             message: {
                 status: 'success',
@@ -209,10 +214,21 @@ export async function logoutUser() {
         maxAge: 0, // Immediately expires
     });
 
-    return {
-        message: {
-            status: 'success',
-            text: 'Logged out successfully.',
-        },
-    };
+    revalidatePath('/');
+    redirect('/');
+}
+
+export async function getAuthStatus() {
+    const authToken = (await cookies()).get('auth_token')?.value;
+
+    if (!authToken) {
+        return { isAuthenticated: false };
+    }
+
+    try {
+        const user = verifyToken(authToken);
+        return { isAuthenticated: !!user, user };
+    } catch (error) {
+        return { isAuthenticated: false };
+    }
 }

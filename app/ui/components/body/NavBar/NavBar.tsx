@@ -2,6 +2,7 @@
 import styles from './NavBar.module.scss';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/app/context/AuthContext';
 
 const links = [
     {
@@ -19,12 +20,7 @@ const links = [
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    useEffect(() => {
-        const authToken = document.cookie.split('; ').find(row => row.startsWith('auth_token='));
-        setIsAuthenticated(!!authToken);
-    }, []);
+    const { isAuthenticated, refreshAuth } = useAuth();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -72,7 +68,7 @@ export default function NavBar() {
                 })}
                 {isAuthenticated ? (
                     <li key='logout' className='hover:text-white cursor-pointer transition duration 150'>
-                        <Link href='/logout' aria-label='Logout and end user session.' onClick={handleLinkClick}>
+                        <Link href='/logout' aria-label='Logout and end user session.' onClick={() => {handleLinkClick(); refreshAuth();}}>
                             Logout
                         </Link>
                     </li>
