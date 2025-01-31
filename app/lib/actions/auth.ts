@@ -117,6 +117,13 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
             }
         };
     }
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Successfully logged in!',
+        },
+    };
     
     revalidatePath('/account');
     redirect('/account');
@@ -185,16 +192,6 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             path: '/',
             secure: process.env.NODE_ENV === 'production',
         })
-
-        revalidatePath('/account');
-        redirect('/account');
-
-        return {
-            message: {
-                status: 'success',
-                text: 'Account Created Successfully!',
-            }
-        }
     } catch (error) {
         console.log(error);
         return {
@@ -204,6 +201,16 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             }
         }
     }
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Account Created Successfully!',
+        }
+    }
+
+    revalidatePath('/account');
+    redirect('/account');
 }
 
 export async function logoutUser() {

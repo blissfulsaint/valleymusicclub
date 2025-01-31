@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { Separator } from "blisskit-ui";
 import { createUser, AuthState } from "@/app/lib/actions/auth";
 import Form from "@/app/ui/components/vmc-form/Form/Form"
@@ -11,6 +11,8 @@ import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
 import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
 import PageLink from "../../PageLink/PageLink";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function CreateAccountForm() {
     const initialState: AuthState = { message: {status: 'none', text: ''}, errors: {}}
@@ -18,6 +20,17 @@ export default function CreateAccountForm() {
         createUser,
         initialState,
     );
+    const { refreshAuth } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (state.message.status === 'success') {
+            console.log('Account created successfully, refreshing auth...');
+            refreshAuth();
+
+            router.push('/account');
+        }
+    }, [state.message.status, refreshAuth, router])
 
     return (
         <>
