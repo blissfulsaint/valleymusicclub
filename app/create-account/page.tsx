@@ -1,3 +1,4 @@
+'use client';
 import { Metadata } from "next"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -18,7 +19,7 @@ export default function CreateAccount() {
             router.push('/account');
         }
     }, [isAuthenticated, router]);
-    
+
     return (
         <LayoutBand>
             <CreateAccountForm></CreateAccountForm>
