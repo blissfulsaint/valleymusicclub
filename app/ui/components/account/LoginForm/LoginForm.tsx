@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { Separator } from "blisskit-ui";
 import { authenticateUser, AuthState } from "@/app/lib/actions/auth";
 import Form from "@/app/ui/components/vmc-form/Form/Form"
@@ -11,6 +11,8 @@ import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
 import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
 import PageLink from "../../PageLink/PageLink";
+import { useAuth } from "@/app/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
     const initialState: AuthState = { message: {status: 'none', text: ''}, errors: {}}
@@ -18,6 +20,17 @@ export default function LoginForm() {
         authenticateUser,
         initialState,
     );
+    const { refreshAuth } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (state.message.status === 'success') {
+            console.log('Logged in successfully, refreshing auth...');
+            refreshAuth();
+
+            router.push('/account');
+        }
+    }, [state.message.status, refreshAuth, router])
 
     return (
         <>
@@ -70,7 +83,7 @@ export default function LoginForm() {
                         </div>
                     </InputContainer>
                     <FormButton type="submit" disabled={isPending}>Login</FormButton>
-                    <PageLink href='/account/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
+                    <PageLink href='/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
                 </OutlineFieldset>
             </Form>
         </>

@@ -66,6 +66,13 @@ export default function NavBar() {
                         </li>
                     )
                 })}
+                {isAuthenticated && 
+                    <li key='account-home' className='hover:text-white cursor-pointer transition duration 150'>
+                        <Link href='/account' aria-label='View your account dashboard.' onClick={handleLinkClick}>
+                            Account Home
+                        </Link>
+                    </li>
+                }
                 {isAuthenticated ? (
                     <li key='logout' className='hover:text-white cursor-pointer transition duration 150'>
                         <Link href='/logout' aria-label='Logout and end user session.' onClick={() => {handleLinkClick(); refreshAuth();}}>

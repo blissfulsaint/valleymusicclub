@@ -18,7 +18,7 @@ const AccountFormSchema = z.object({
         .min(1, 'Please provide a first name'),
     middle_name: z.string({
         invalid_type_error: 'Please provide a valid middle name',
-    }).optional(),
+    }).optional().transform(value => value?.trim() === '' ? null : value),
     last_name: z.string({
         invalid_type_error: 'Please provide a valid last name',
     })
@@ -33,6 +33,7 @@ const AccountFormSchema = z.object({
           "Please provide a valid phone number"
         )
         .optional()
+        .transform(value => value?.trim() === '' ? null : value)
 });
 
 export type AuthState = {
@@ -117,9 +118,13 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
             }
         };
     }
-    
-    revalidatePath('/account');
-    redirect('/account');
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Successfully logged in!',
+        },
+    };
 }
 
 const CreateUser = AccountFormSchema.omit({
@@ -150,7 +155,7 @@ export async function createUser(prevState: AuthState, formData: FormData) {
 
     try {
         const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
-        const duplicatePhone = await sql`SELECT COUNT(*) FROM dev.test_user WHERE phone = ${phone}`;
+        const duplicatePhone = phone ? await sql`SELECT COUNT(*) FROM dev.test_user WHERE phone = ${phone}` : { rows: [{ count: 0 }] };
         
         if (duplicateEmail.rows[0].count > 0) {
             return {
@@ -185,16 +190,6 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             path: '/',
             secure: process.env.NODE_ENV === 'production',
         })
-
-        revalidatePath('/account');
-        redirect('/account');
-
-        return {
-            message: {
-                status: 'success',
-                text: 'Account Created Successfully!',
-            }
-        }
     } catch (error) {
         console.log(error);
         return {
@@ -202,6 +197,13 @@ export async function createUser(prevState: AuthState, formData: FormData) {
                 status: 'error',
                 text: 'Database error. Failed to create account.'
             }
+        }
+    }
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Account Created Successfully!',
         }
     }
 }
