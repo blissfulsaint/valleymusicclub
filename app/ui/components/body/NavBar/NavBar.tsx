@@ -2,6 +2,7 @@
 import styles from './NavBar.module.scss';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/app/context/AuthContext';
 
 const links = [
     {
@@ -13,17 +14,13 @@ const links = [
         pageTitle: 'About Us',
         href: '/page-in-development',
         ariaLabel: 'Learn about Valley Music Club',
-    },
-    {
-        pageTitle: 'Login',
-        href: '/page-in-development',
-        ariaLabel: 'Login or Create an Account',
     }
 ]
 
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
+    const { isAuthenticated, refreshAuth } = useAuth();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -69,6 +66,19 @@ export default function NavBar() {
                         </li>
                     )
                 })}
+                {isAuthenticated ? (
+                    <li key='logout' className='hover:text-white cursor-pointer transition duration 150'>
+                        <Link href='/logout' aria-label='Logout and end user session.' onClick={() => {handleLinkClick(); refreshAuth();}}>
+                            Logout
+                        </Link>
+                    </li>
+                ) : (
+                    <li key='login' className='hover:text-white cursor-pointer transition duration 150'>
+                        <Link href='/login' aria-label='Login or Create an Account.' onClick={handleLinkClick}>
+                            Login
+                        </Link>
+                    </li>
+                )}
             </ul>
             {isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-9 cursor-pointer" onClick={toggleMenu}></div>}
         </nav>
