@@ -83,7 +83,7 @@ export default function LoginForm() {
                         </div>
                     </InputContainer>
                     <FormButton type="submit" disabled={isPending}>Login</FormButton>
-                    <PageLink href='/account/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
+                    <PageLink href='/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
                 </OutlineFieldset>
             </Form>
         </>

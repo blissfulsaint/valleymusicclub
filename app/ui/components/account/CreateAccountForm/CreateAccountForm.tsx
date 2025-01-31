@@ -158,7 +158,7 @@ export default function CreateAccountForm() {
                         </div>
                     </InputContainer>
                     <FormButton type="submit" disabled={isPending}>Create Account</FormButton>
-                    <PageLink href='/account/login' className="mx-auto">Already have an account? Login here!</PageLink>
+                    <PageLink href='/login' className="mx-auto">Already have an account? Login here!</PageLink>
                 </OutlineFieldset>
             </Form>
         </>
