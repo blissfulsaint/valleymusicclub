@@ -229,6 +229,6 @@ export async function getAuthStatus() {
         const user = verifyToken(authToken);
         return { isAuthenticated: !!user, user };
     } catch (error) {
-        return { isAuthenticated: false };
+        return { isAuthenticated: false, error: error };
     }
 }
