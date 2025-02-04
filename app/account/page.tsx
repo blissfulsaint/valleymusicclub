@@ -27,7 +27,7 @@ export default function AccountHome() {
         <LayoutBand>
             {loading ? (
                 // Show a skeleton or a loading message while fetching
-                <h1 className="animate-pulse bg-gray-300 w-48 h-8 rounded-md"></h1> 
+                <h1 className="animate-pulse bg-gray-300 w-96 h-16 rounded-md"></h1> 
             ) : (
                 <h1>Welcome to your dashboard, {user?.first_name}</h1>
             )}
