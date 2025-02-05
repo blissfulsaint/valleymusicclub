@@ -34,7 +34,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair);
-  margin: .7em 10px 10px;
+  margin-top: .7em;
+  padding: 10px;
 }
 
 h1 {
@@ -50,5 +51,5 @@ h3 {
 }
 
 p {
-  margin: 10px;
+  padding: 10px;
 }
