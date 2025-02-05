@@ -27,8 +27,8 @@ export default function AccountHome() {
         <LayoutBand>
             {loading ? (
                 <>
-                    <h1><span className="animate-pulse bg-gray-300 w-96 h-[1em] rounded-md"></span></h1> 
-                    <p><span className="animate-pulse bg-gray-300 w-48 h-[1em] rounded-md"></span></p>
+                    <h1><span className="animate-pulse bg-gray-300 inline-block w-96 h-[1em] rounded-md"></span></h1> 
+                    <p><span className="animate-pulse bg-gray-300 inline-block w-48 h-[1em] rounded-md"></span></p>
                 </>
             ) : (
                 <>
