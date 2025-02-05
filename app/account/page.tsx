@@ -26,12 +26,16 @@ export default function AccountHome() {
     return (
         <LayoutBand>
             {loading ? (
-                // Show a skeleton or a loading message while fetching
-                <h1 className="animate-pulse bg-gray-300 w-96 h-16 rounded-md"></h1> 
+                <>
+                    <h1 className="animate-pulse bg-gray-300 w-96 h-16 rounded-md my-4"></h1> 
+                    <p className="animate-pulse bg-gray-300 w-48 h-8 rounded-md"></p> 
+                </>
             ) : (
-                <h1>Welcome to your dashboard, {user?.first_name}</h1>
+                <>
+                    <h1>Welcome to your dashboard, {user?.first_name}</h1>
+                    <p>This page is still in development. Please check back later for more features!</p>
+                </>
             )}
-            <p>This page is still in development. Please check back later for more features!</p>
         </LayoutBand>
     )
 }
