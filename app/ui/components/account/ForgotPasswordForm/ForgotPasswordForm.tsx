@@ -17,6 +17,22 @@ export default function ForgotPasswordForm() {
             <Form action={''}>
                 <OutlineFieldset>
                     <OutlineFieldsetLegend>Reset Password</OutlineFieldsetLegend>
+                    <InputContainer>
+                        <label htmlFor="email">Email</label>
+                        <OutlineInput 
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="johnsmith@example.com"
+                            aria-describedby="email-error"
+                        />
+                        {/* Add state.error logic */}
+                        <StatusMessage status="error">
+                            Sample Error Message
+                        </StatusMessage>
+                    </InputContainer>
+                    <FormButton type="submit">Send Reset Link</FormButton>
+                    <PageLink href='/login' className="mx-auto">Return to Login</PageLink>
                 </OutlineFieldset>
             </Form>
         </>
