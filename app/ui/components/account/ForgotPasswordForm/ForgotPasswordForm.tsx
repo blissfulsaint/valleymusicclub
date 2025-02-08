@@ -1,6 +1,7 @@
 'use client';
 
 import { Separator } from "blisskit-ui";
+// import { useState } from "react";
 import Form from "../../vmc-form/Form/Form";
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset";
 import OutlineFieldsetLegend from "../../vmc-form/OutlineFieldsetLegend/OutlineFieldsetLegend";
@@ -11,6 +12,16 @@ import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
 import PageLink from "../../PageLink/PageLink";
 
 export default function ForgotPasswordForm() {
+    // const [isPending, setIsPending] = useState(false);
+
+    // async function emailTest() {
+    //     try {
+    //         await fetch('/api/email/send', {
+    //             method: 'POST'
+    //         })
+    //     }
+    // }
+
     return (
         <>
             <Separator size="sm" />
@@ -31,7 +42,7 @@ export default function ForgotPasswordForm() {
                             Sample Error Message
                         </StatusMessage>
                     </InputContainer>
-                    <FormButton type="submit">Send Reset Link</FormButton>
+                    <FormButton type="submit">Send Password Reset Link</FormButton>
                     <PageLink href='/login' className="mx-auto">Return to Login</PageLink>
                 </OutlineFieldset>
             </Form>
