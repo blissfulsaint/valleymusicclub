@@ -1,4 +1,4 @@
-interface FormProps {
+interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
     action: ((payload: FormData) => void) | string;
     children: React.ReactNode;
 }
