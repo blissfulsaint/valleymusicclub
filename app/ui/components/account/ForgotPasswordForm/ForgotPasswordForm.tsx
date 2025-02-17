@@ -53,7 +53,7 @@ export default function ForgotPasswordForm() {
     return (
         <>
             <Separator size="sm" />
-            <Form action={""} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <OutlineFieldset>
                     <OutlineFieldsetLegend>Reset Password</OutlineFieldsetLegend>
                     <InputContainer>

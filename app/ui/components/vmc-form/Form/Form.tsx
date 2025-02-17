@@ -1,5 +1,5 @@
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
-    action: ((payload: FormData) => void) | string;
+    action?: ((payload: FormData) => void) | string;
     children: React.ReactNode;
 }
 
