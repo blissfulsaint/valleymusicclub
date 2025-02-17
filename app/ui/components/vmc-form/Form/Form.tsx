@@ -6,9 +6,10 @@ interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
 export default function Form({
     action,
     children,
+    ...rest
 }: FormProps) {
     return (
-        <form action={action}>
+        <form action={action} {...rest}>
             {children}
         </form>
     )
