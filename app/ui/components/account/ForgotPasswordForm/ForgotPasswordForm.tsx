@@ -38,14 +38,11 @@ export default function ForgotPasswordForm() {
                 throw new Error(result.error || "Something went wrong");
             }
 
-            console.log('Success!!');
             setStatus({ status: "success", message: "Password reset email sent!" });
         } catch (error) {
-            console.log('Error!!');
             const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
             setStatus({ status: "error", message: errorMessage });
         } finally {
-            console.log('Finally!!');
             setIsPending(false);
         }
     }
