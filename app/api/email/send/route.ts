@@ -1,6 +1,7 @@
 import PasswordResetEmailTemplate from "@/app/ui/components/email/PasswordResetEmailTemplate/PasswordResetEmailTemplate";
 import { Resend } from "resend";
 import { getUserByEmail } from "@/app/lib/actions/user";
+import crypto from 'crypto';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,6 +17,9 @@ export async function POST(req: Request) {
         const user = await getUserByEmail(email);
 
         if (user) {
+            const token = crypto.randomBytes(32).toString('hex');
+            const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
+            
             await resend.emails.send({
                 from : 'Valley Music Club <password-reset@valleymusicclub.com>',
                 to: [user.email],

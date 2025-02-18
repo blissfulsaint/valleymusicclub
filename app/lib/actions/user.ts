@@ -17,3 +17,12 @@ export async function getUserByEmail(email: string): Promise<User | null> {
         return null;
     }
 }
+
+export async function insertPasswordRecoveryToken(token: string) {
+    try {
+        const result = await sql`INSERT INTO dev.test_password_recovery_token (user_id, token, expires_at, used)`
+    } catch (error) {
+        console.error('Database Error: ', error);
+        return null;
+    }
+}
