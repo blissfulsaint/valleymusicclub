@@ -13,18 +13,18 @@ export async function POST(req: Request) {
             return Response.json({ error: 'Email is required' }, { status: 400 });
         }
 
-        const { data, error } = await resend.emails.send({
-            from : 'Acme <onboarding@resend.dev>',
-            to: [email],
-            subject: 'Hello world',
-            react: PasswordResetEmailTemplate({ firstName: 'Brandon' }),
-        });
+        const user = await getUserByEmail(email);
 
-        if (error) {
-            return Response.json({ error }, { status: 500 });
+        if (user) {
+            await resend.emails.send({
+                from : 'Valley Music Club <password-reset@valleymusicclub.com>',
+                to: [user.email],
+                subject: 'Reset VMC Password',
+                react: PasswordResetEmailTemplate({ firstName: user.first_name }),
+            });
         }
 
-        return Response.json(data);
+        return Response.json({ message: 'If an account exists, a reset email has been sent.' }, { status: 200 })
     } catch (error) {
         return Response.json({ error }, { status: 500 });
     }

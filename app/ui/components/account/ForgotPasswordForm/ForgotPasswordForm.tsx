@@ -38,7 +38,7 @@ export default function ForgotPasswordForm() {
                 throw new Error(result.error || "Something went wrong");
             }
 
-            setStatus({ status: "success", message: "Password reset email sent!" });
+            setStatus({ status: "success", message: result.message });
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
             setStatus({ status: "error", message: errorMessage });
