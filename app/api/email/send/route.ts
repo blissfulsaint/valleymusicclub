@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
             await insertPasswordRecoveryToken(user.id, token, expiresAt);
 
-            const resetLink = `https://valleymusicclub.vercel.app/reset-password?token=${token}`;
+            const resetLink = `https://valleymusicclub.vercel.app/account/reset-password?token=${token}`;
             
             await resend.emails.send({
                 from : 'Valley Music Club <password-reset@valleymusicclub.com>',
