@@ -17,3 +17,15 @@ export async function getUserByEmail(email: string): Promise<User | null> {
         return null;
     }
 }
+
+export async function insertPasswordRecoveryToken(userId: string, token: string, expiresAt: Date) {
+    try {
+        const expiresAtISO = expiresAt.toISOString();
+
+        await sql`INSERT INTO dev.test_password_recovery_token (user_id, token, expires_at, used)
+            VALUES (${userId}, ${token}, ${expiresAtISO}, FALSE)`
+    } catch (error) {
+        console.error('Database Error: ', error);
+        return null;
+    }
+}
