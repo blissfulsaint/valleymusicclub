@@ -9,6 +9,7 @@ import OutlineInput from "@/app/ui/components/vmc-form/Input/Input";
 import InputContainer from "@/app/ui/components/vmc-form/InputContainer/InputContainer";
 import OutlineFieldset from "@/app/ui/components/vmc-form/OutlineFieldset/OutlineFieldset";
 import OutlineFieldsetLegend from "@/app/ui/components/vmc-form/OutlineFieldsetLegend/OutlineFieldsetLegend";
+import { LayoutBand, Separator } from "blisskit-ui";
 
 export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
@@ -61,15 +62,16 @@ export default function ResetPasswordPage() {
     };
 
     if (error) {
-        return <StatusMessage status="error">{error}</StatusMessage>
+        return <LayoutBand><StatusMessage status="error">{error}</StatusMessage></LayoutBand>
     }
 
     if (!isValid) {
-        return <div>Validating token...</div>;
+        return <LayoutBand><div>Validating token...</div></LayoutBand>;
     }
 
     return (
-        <>
+        <LayoutBand>
+            <Separator size="sm" />
             <Form onSubmit={handleSubmit}>
                 <OutlineFieldset>
                     <OutlineFieldsetLegend>Reset Password</OutlineFieldsetLegend>
@@ -100,6 +102,6 @@ export default function ResetPasswordPage() {
                     <FormButton type="submit">Reset Password</FormButton>
                 </OutlineFieldset>
             </Form>
-        </>
+        </LayoutBand>
     )
 }
