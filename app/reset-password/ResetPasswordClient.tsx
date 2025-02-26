@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import StatusMessage from "@/app/ui/components/vmc-form/StatusMessage/StatusMessage";
 import Form from "@/app/ui/components/vmc-form/Form/Form";
 import FormButton from "@/app/ui/components/vmc-form/FormButton/FormButton";
 import OutlineInput from "@/app/ui/components/vmc-form/Input/Input";
 import InputContainer from "@/app/ui/components/vmc-form/InputContainer/InputContainer";
 import OutlineFieldset from "@/app/ui/components/vmc-form/OutlineFieldset/OutlineFieldset";
 import OutlineFieldsetLegend from "@/app/ui/components/vmc-form/OutlineFieldsetLegend/OutlineFieldsetLegend";
-import { LayoutBand, Separator } from "blisskit-ui";
+import { LayoutBand, Separator, StatusMessage } from "blisskit-ui";
 
 export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
