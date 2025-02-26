@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState, useEffect } from "react"
-import { Separator } from "blisskit-ui";
+import { Separator, StatusMessage } from "blisskit-ui";
 import { authenticateUser, AuthState } from "@/app/lib/actions/auth";
 import Form from "@/app/ui/components/vmc-form/Form/Form"
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset";
@@ -9,7 +9,6 @@ import OutlineFieldsetLegend from "../../vmc-form/OutlineFieldsetLegend/OutlineF
 import InputContainer from "../../vmc-form/InputContainer/InputContainer";
 import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
-import StatusMessage from "../../vmc-form/StatusMessage/StatusMessage";
 import PageLink from "../../PageLink/PageLink";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
