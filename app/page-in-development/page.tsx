@@ -11,7 +11,7 @@ export default function PageInDevelopment() {
         <LayoutBand>
             <h1>Looks like this page isn&#39;t done yet!</h1>
             <p>We are still hard at work developing this page. Please try again later!</p>
-            <PageLink href='/' className="mx-2" button>Return Home</PageLink>
+            <PageLink href='/' button>Return Home</PageLink>
         </LayoutBand>
     )
 }
