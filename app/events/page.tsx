@@ -1,7 +1,6 @@
 'use client';
-import { LayoutBand } from "blisskit-ui";
+import { LayoutBand, Separator } from "blisskit-ui";
 import Hero from "../ui/components/Hero/Hero";
-import { Separator } from "blisskit-ui";
 import PageLink from "../ui/components/PageLink/PageLink";
 import { useAuth } from "../context/AuthContext";
 
