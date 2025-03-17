@@ -12,7 +12,7 @@ const links = [
     },
     {
         pageTitle: 'About Us',
-        href: '/page-in-development',
+        href: '/about',
         ariaLabel: 'Learn about Valley Music Club',
     }
 ]

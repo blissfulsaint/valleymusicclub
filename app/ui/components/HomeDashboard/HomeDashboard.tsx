@@ -28,7 +28,7 @@ export default function HomeDashboard() {
             )}
             <CardLink 
                 textClassName="bg-primaryColor" 
-                href="/page-in-development" 
+                href="/about" 
                 title="About Us" 
                 ariaLabel="Learn more about Valley Music Club" 
                 imgSrc="/teachergroup1.jpeg"
@@ -42,7 +42,7 @@ export default function HomeDashboard() {
             />
             <CardLink 
                 textClassName="bg-primaryColor" 
-                href="/page-in-development" 
+                href="/festivals" 
                 title="Music Festivals" 
                 ariaLabel="Learn about VMC Music Festivals" 
                 imgSrc="/orchestra-conductor-stock-1.jpg" 
