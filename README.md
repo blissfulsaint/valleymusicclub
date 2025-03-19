@@ -1,15 +1,15 @@
 # Valley Music Club
-Welcome to the repository for the full-stack code of the official Valley Music Club web page!
+Welcome to the official repository for the full-stack development of the Valley Music Club website.
 
-This application is a work in progress, but is intended to eventually become the application through which music educators in the Phoenix, Arizona area can participate in Valley Music Club activities and festivals, as well as pay any related dues. 
+This application is currently in development and is intended to serve as the primary platform for music educators in the Phoenix, Arizona area to participate in Valley Music Club activities, register for festivals, and manage related dues.
 
-There exists already a site for the organization, which you can view [here](https://valleymusicclub.com/). However, when I initially built this site, I understood relatively little about the web development world and, in particular, which tech stack would be best for this project. The scope grew beyond my initial expectations and development slowed as the application became more complex. I eventually came to the realization that a component and hook-based stack such as React may be better for the needs of the site.
+An existing website for the organization is available [here](https://valleymusicclub.com/). However, when initially building the site, I had limited experience in web development and technology selection. As the scope of the project expanded, development became increasingly complex, leading to slower progress. Over time, I recognized that a component and hook-based framework like React would better align with the site's long-term needs.
 
-After two internships learning React and Angular, and more recently learning about Next.js and Tailwind CSS, I decided to begin transitioning the existing [Valley Music Club](https://valleymusicclub.com/) website from the old tech stack to a React-based architecture with a serverless backend. As stated before, the intent is to eventually use this as the main repository for the site and retire the old one. With this migration will come improved development time to create new features at the request of my client as well as a more dynamic website with faster load times.
+After gaining experience with React, Angular, Next.js, and Tailwind CSS through two internships, I made the decision to transition the Valley Music Club website to a React-based architecture with a serverless backend. This migration aims to improve development efficiency, enhance site performance, and enable a more dynamic user experience. The goal is to eventually retire the old implementation in favor of this new version.
 
-If you are interested in the progress of this site, check back periodically for more updates!
+For those interested in the project's progress, updates will be shared periodically.
 
-You can view the current deployment of the site by [clicking here](https://valleymusicclub.vercel.app/)!
+You can view the latest deployment of the site [here](https://valleymusicclub.vercel.app/)!
 
 
 # About this repository
