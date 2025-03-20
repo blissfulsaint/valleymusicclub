@@ -1,6 +1,7 @@
 'use client';
 import { LayoutBand } from "blisskit-ui";
 import { useEffect, useState } from "react";
+import PageLink from "../ui/components/PageLink/PageLink";
 
 export default function AccountHome() {
     const [user, setUser] = useState<{ id: string; email: string; first_name: string; } | null>(null);
@@ -29,11 +30,13 @@ export default function AccountHome() {
                 <>
                     <h1><span className="animate-pulse bg-gray-300 inline-block w-full max-w-3xl h-[1em] rounded-md"></span></h1> 
                     <p><span className="animate-pulse bg-gray-300 inline-block w-full max-w-lg h-[1em] rounded-md"></span></p>
+                    <p><span className="animate-pulse bg-gray-300 inline-block w-full max-w-lg h-[1em] rounded-md"></span></p>
                 </>
             ) : (
                 <>
                     <h1>Welcome to your dashboard, {user?.first_name}</h1>
                     <p>This page is still in development. Please check back later for more features!</p>
+                    <PageLink href='settings'>Account Settings</PageLink>
                 </>
             )}
         </LayoutBand>
