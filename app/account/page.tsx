@@ -36,7 +36,7 @@ export default function AccountHome() {
                 <>
                     <h1>Welcome to your dashboard, {user?.first_name}</h1>
                     <p>This page is still in development. Please check back later for more features!</p>
-                    <PageLink href='settings'>Account Settings</PageLink>
+                    <PageLink href='/account/settings'>Account Settings</PageLink>
                 </>
             )}
         </LayoutBand>
