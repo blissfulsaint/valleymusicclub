@@ -21,7 +21,7 @@ export async function POST(req: Request) {
             const token = crypto.randomBytes(32).toString('hex');
             const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
 
-            await insertPasswordRecoveryToken(user.id, token, expiresAt);
+            await insertPasswordRecoveryToken(user.user_id, token, expiresAt);
 
             const resetLink = `https://valleymusicclub.vercel.app/reset-password?token=${token}`;
             
