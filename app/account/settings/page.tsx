@@ -1,5 +1,11 @@
+import { LayoutBand } from "blisskit-ui"
+import PageLink from "@/app/ui/components/PageLink/PageLink"
+
 export default function AccountSettings() {
     return (
-        <h1>Welcome to the Account Settings page!</h1>
+        <LayoutBand>
+            <h1>Welcome to the Account Settings page!</h1>
+            <PageLink href='/account'>Return to Account Home</PageLink>
+        </LayoutBand>
     )
 }
