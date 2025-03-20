@@ -11,7 +11,7 @@ import { cookies } from 'next/headers';
 import { verifyToken } from '../utils/jwt';
 
 const AccountFormSchema = z.object({
-    id: z.string(),
+    user_id: z.string(),
     first_name: z.string({
         invalid_type_error: 'Please provide a valid first name',
     })
@@ -38,7 +38,7 @@ const AccountFormSchema = z.object({
 
 export type AuthState = {
     errors?: {
-        id?: string[];
+        user_id?: string[];
         first_name?: string[];
         middle_name?: string[];
         last_name?: string[];
@@ -53,7 +53,7 @@ export type AuthState = {
 }
 
 const AuthenticateUser = AccountFormSchema.omit({
-    id: true,
+    user_id: true,
     first_name: true,
     middle_name: true,
     last_name: true,
@@ -102,7 +102,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         }
 
         // ✅ Set the auth token
-        const token = generateToken({ id: user.rows[0].user_id, email, first_name: user.rows[0].first_name });
+        const token = generateToken({ user_id: user.rows[0].user_id, email, first_name: user.rows[0].first_name });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
@@ -128,7 +128,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
 }
 
 const CreateUser = AccountFormSchema.omit({
-    id: true,
+    user_id: true,
 })
 
 export async function createUser(prevState: AuthState, formData: FormData) {
@@ -183,7 +183,7 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             RETURNING user_id, email
         `
 
-        const token = generateToken({ id: newUser.rows[0].id, email, first_name });
+        const token = generateToken({ user_id: newUser.rows[0].id, email, first_name });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
