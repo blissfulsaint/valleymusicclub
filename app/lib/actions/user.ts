@@ -9,7 +9,7 @@ export async function getUserByEmail(email: string): Promise<User | null> {
             throw new Error('Email is required');
         }
 
-        const user = await sql<User>`SELECT * FROM dev.test_user WHERE email = ${email}`;
+        const user = await sql<User>`SELECT * FROM public.user WHERE email = ${email}`;
 
         return user.rows.length > 0 ? user.rows[0] : null
     } catch (error) {
@@ -22,7 +22,7 @@ export async function insertPasswordRecoveryToken(userId: string, token: string,
     try {
         const expiresAtISO = expiresAt.toISOString();
 
-        await sql`INSERT INTO dev.test_password_recovery_token (user_id, token, expires_at, used)
+        await sql`INSERT INTO public.password_recovery_token (user_id, token, expires_at, used)
             VALUES (${userId}, ${token}, ${expiresAtISO}, FALSE)`
     } catch (error) {
         console.error('Database Error: ', error);

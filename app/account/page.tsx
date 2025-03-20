@@ -3,7 +3,7 @@ import { LayoutBand } from "blisskit-ui";
 import { useEffect, useState } from "react";
 
 export default function AccountHome() {
-    const [user, setUser] = useState<{ id: string; email: string; first_name: string; } | null>(null);
+    const [user, setUser] = useState<{ user_id: string; email: string; first_name: string; } | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
