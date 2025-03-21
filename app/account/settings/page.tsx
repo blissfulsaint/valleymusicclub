@@ -7,9 +7,9 @@ export default function AccountSettings() {
         <LayoutBand>
             <h1>Account Settings</h1>
             <p>Update your email, password, and other personal information related to your account on this page.</p>
-            <Separator />
+            <Separator size="lg" />
             <UpdatePasswordForm />
-            <Separator />
+            <Separator size="lg" />
             <PageLink href='/account'>Return to Account Home</PageLink>
         </LayoutBand>
     )
