@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import { StatusMessage } from "blisskit-ui";
+// import { StatusMessage } from "blisskit-ui";
 
 import Form from "../../vmc-form/Form/Form"
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset"
@@ -9,7 +9,7 @@ import InputContainer from "../../vmc-form/InputContainer/InputContainer"
 import OutlineInput from "../../vmc-form/Input/Input"
 import FormButton from "../../vmc-form/FormButton/FormButton"
 
-type StatusState = { status: "success" | "error"; message: string } | null;
+// type StatusState = { status: "success" | "error"; message: string } | null;
 
 export default function UpdatePasswordForm() {
     const [oldPassword, setOldPassword] = useState('');
@@ -17,7 +17,7 @@ export default function UpdatePasswordForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        
+        console.log(event);
     }
 
     return (

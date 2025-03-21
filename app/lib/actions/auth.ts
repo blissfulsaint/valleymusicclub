@@ -102,7 +102,14 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         }
 
         // ✅ Set the auth token
-        const token = generateToken({ user_id: user.rows[0].user_id, email, first_name: user.rows[0].first_name });
+        const token = generateToken({ 
+            user_id: user.rows[0].user_id, 
+            email, 
+            first_name: user.rows[0].first_name,
+            middle_name: user.rows[0].middle_name,
+            last_name: user.rows[0].last_name,
+            phone: user.rows[0].phone 
+        });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
@@ -183,7 +190,14 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             RETURNING user_id, email
         `
 
-        const token = generateToken({ user_id: newUser.rows[0].id, email, first_name });
+        const token = generateToken({ 
+            user_id: newUser.rows[0].id, 
+            email, 
+            first_name,
+            middle_name,
+            last_name,
+            phone
+        });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
