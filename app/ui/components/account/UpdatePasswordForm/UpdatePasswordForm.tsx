@@ -28,8 +28,8 @@ export default function UpdatePasswordForm() {
     }, [state.message.status])
 
     return (
-        <Form action={formAction} className="ml-0">
-            <OutlineFieldset>
+        <Form action={formAction}>
+            <OutlineFieldset className="ml-0">
                 <OutlineFieldsetLegend>Update Password</OutlineFieldsetLegend>
                     <div id="form-error" aria-live="polite" aria-atomic="true">
                         {state.message.text && (
