@@ -102,7 +102,14 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         }
 
         // ✅ Set the auth token
-        const token = generateToken({ user_id: user.rows[0].user_id, email, first_name: user.rows[0].first_name });
+        const token = generateToken({ 
+            user_id: user.rows[0].user_id, 
+            email, 
+            first_name: user.rows[0].first_name,
+            middle_name: user.rows[0].middle_name,
+            last_name: user.rows[0].last_name,
+            phone: user.rows[0].phone 
+        });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
@@ -183,7 +190,14 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             RETURNING user_id, email
         `
 
-        const token = generateToken({ user_id: newUser.rows[0].id, email, first_name });
+        const token = generateToken({ 
+            user_id: newUser.rows[0].id, 
+            email, 
+            first_name,
+            middle_name,
+            last_name,
+            phone
+        });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
@@ -232,5 +246,116 @@ export async function getAuthStatus() {
         return { isAuthenticated: !!user, user };
     } catch (error) {
         return { isAuthenticated: false, error: error };
+    }
+}
+
+
+const UpdatePasswordSchema = z.object({
+    oldPassword: z.string()
+        .min(8, 'Old password is required.'),
+    newPassword: z.string()
+        .min(8, 'New password must be at least 8 characters in length.'),
+    confirmNewPassword: z.string()
+        .min(8, 'Confirm password must match the new password.')
+}).refine(data => data.newPassword === data.confirmNewPassword, {
+    message: 'New passwords do not match.',
+    path: ['confirmNewPassword'],
+});
+
+export type PasswordState = {
+    errors?: {
+        oldPassword?: string[];
+        newPassword?: string[];
+        confirmNewPassword?: string[];
+    };
+    message: {
+        status: string;
+        text: string;
+    };
+}
+
+export async function updatePassword(prevState: PasswordState, formData: FormData) {
+    const validatedFields = UpdatePasswordSchema.safeParse({
+        oldPassword: formData.get('old-password'),
+        newPassword: formData.get('new-password'),
+        confirmNewPassword: formData.get('confirm-password'),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: {
+                status: 'error',
+                text: 'Invalid form input.',
+            },
+        };
+    }
+
+    const { oldPassword, newPassword } = validatedFields.data;
+
+    const authToken = (await cookies()).get('auth_token')?.value;
+    if (!authToken) {
+        return {
+            message: {
+                status: 'error',
+                text: 'User not authenticated.',
+            },
+        };
+    }
+
+    let user;
+    try {
+        user = verifyToken(authToken) as { user_id: string };
+    } catch (error) {
+        console.error(error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Invalid or expired session. Please log in again.',
+            }
+        }
+    }
+
+    try {
+        const result = await sql`SELECT password FROM public.user WHERE user_id = ${user?.user_id}`;
+        if (!result.rows[0]) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'User not found.',
+                },
+            };
+        }
+
+        const storedPasswordHash = result.rows[0].password;
+
+        const isOldPasswordValid = await bcrypt.compare(oldPassword, storedPasswordHash);
+        if (!isOldPasswordValid) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Old password is incorrect.',
+                },
+            };
+        }
+
+        const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+        await sql`UPDATE public.user SET password = ${newPasswordHash} WHERE user_id = ${user.user_id}`;
+
+        return {
+            message: {
+                status: 'success',
+                text: 'Password updated successfully!',
+            },
+        };
+    } catch (error) {
+        console.error('Error updating password: ', error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Database error. Failed to update password.',
+            },
+        };
     }
 }
