@@ -28,7 +28,7 @@ export default function UpdatePasswordForm() {
     }, [state.message.status])
 
     return (
-        <Form action={formAction}>
+        <Form action={formAction} className="ml-0">
             <OutlineFieldset>
                 <OutlineFieldsetLegend>Update Password</OutlineFieldsetLegend>
                     <div id="form-error" aria-live="polite" aria-atomic="true">
