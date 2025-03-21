@@ -25,7 +25,7 @@ export default function UpdatePasswordForm() {
             console.log('Password updated successfully, refreshing auth...');
             refreshAuth();
         }
-    }, [state.message.status, refreshAuth])
+    }, [state.message.status])
 
     return (
         <Form action={formAction}>
