@@ -276,9 +276,9 @@ export type PasswordState = {
 
 export async function updatePassword(prevState: PasswordState, formData: FormData) {
     const validatedFields = UpdatePasswordSchema.safeParse({
-        oldPassword: formData.get('oldPassword'),
-        newPassword: formData.get('newPassword'),
-        confirmNewPassword: formData.get('confirmNewPassword'),
+        oldPassword: formData.get('old-password'),
+        newPassword: formData.get('new-password'),
+        confirmNewPassword: formData.get('confirm-password'),
     });
 
     if (!validatedFields.success) {
