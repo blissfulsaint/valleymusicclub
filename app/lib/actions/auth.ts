@@ -248,3 +248,114 @@ export async function getAuthStatus() {
         return { isAuthenticated: false, error: error };
     }
 }
+
+
+const UpdatePasswordSchema = z.object({
+    oldPassword: z.string()
+        .min(8, 'Old password is required.'),
+    newPassword: z.string()
+        .min(8, 'New password must be at least 8 characters in length.'),
+    confirmNewPassword: z.string()
+        .min(8, 'Confirm password must match the new password.')
+}).refine(data => data.newPassword === data.confirmNewPassword, {
+    message: 'New passwords do not match.',
+    path: ['confirmNewPassword'],
+});
+
+export type PasswordState = {
+    errors?: {
+        oldPassword?: string[];
+        newPassword?: string[];
+        confirmNewPassword?: string[];
+    };
+    message: {
+        status: string;
+        text: string;
+    };
+}
+
+export async function updatePassword(prevState: PasswordState, formData: FormData) {
+    const validatedFields = UpdatePasswordSchema.safeParse({
+        oldPassword: formData.get('oldPassword'),
+        newPassword: formData.get('newPassword'),
+        confirmNewPassword: formData.get('confirmNewPassword'),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: {
+                status: 'error',
+                text: 'Invalid form input.',
+            },
+        };
+    }
+
+    const { oldPassword, newPassword } = validatedFields.data;
+
+    const authToken = (await cookies()).get('auth_token')?.value;
+    if (!authToken) {
+        return {
+            message: {
+                status: 'error',
+                text: 'User not authenticated.',
+            },
+        };
+    }
+
+    let user;
+    try {
+        user = verifyToken(authToken) as { user_id: string };
+    } catch (error) {
+        console.error(error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Invalid or expired session. Please log in again.',
+            }
+        }
+    }
+
+    try {
+        const result = await sql`SELECT password FROM public.user WHERE user_id = ${user?.user_id}`;
+        if (!result.rows[0]) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'User not found.',
+                },
+            };
+        }
+
+        const storedPasswordHash = result.rows[0].password;
+
+        const isOldPasswordValid = await bcrypt.compare(oldPassword, storedPasswordHash);
+        if (!isOldPasswordValid) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Old password is incorrect.',
+                },
+            };
+        }
+
+        const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+        await sql`UPDATE public.user SET password = ${newPasswordHash} WHERE user_id = ${user.user_id}`;
+
+        return {
+            message: {
+                status: 'success',
+                text: 'Password updated successfully!',
+            },
+        };
+    } catch (error) {
+        console.error('Error updating password: ', error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Database error. Failed to update password.',
+            },
+        };
+    }
+}
