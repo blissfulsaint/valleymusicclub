@@ -7,7 +7,7 @@ export default function AccountSettings() {
         <LayoutBand>
             <h1>Account Settings</h1>
             <p>Update your email, password, and other personal information related to your account on this page.</p>
-            <Separator size="sm" />
+            <Separator size="xs" />
             <UpdatePasswordForm />
             <Separator size="sm" />
             <PageLink href='/account'>Return to Account Home</PageLink>
