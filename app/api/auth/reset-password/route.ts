@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         return Response.json({ error: 'Token and password are required' }, { status: 400 });
     }
 
-    const results = await sql`SELECT user_id, used FROM dev.test_password_recovery_token WHERE token = ${token}`;
+    const results = await sql`SELECT user_id, used FROM public.password_recovery_token WHERE token = ${token}`;
     const tokenData = results.rows[0];
 
     if (!tokenData || tokenData.used) {
@@ -17,9 +17,9 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await sql`UPDATE dev.test_user SET password = ${hashedPassword} WHERE id = ${tokenData.user_id}`;
+    await sql`UPDATE public.user SET password = ${hashedPassword} WHERE user_id = ${tokenData.user_id}`;
 
-    await sql`UPDATE dev.test_password_recovery_token SET used = TRUE WHERE token = ${token}`;
+    await sql`UPDATE public.password_recovery_token SET used = TRUE WHERE token = ${token}`;
 
     return Response.json({ message: 'Password reset successful' });
 }

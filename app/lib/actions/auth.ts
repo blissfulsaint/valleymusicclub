@@ -11,7 +11,7 @@ import { cookies } from 'next/headers';
 import { verifyToken } from '../utils/jwt';
 
 const AccountFormSchema = z.object({
-    id: z.string(),
+    user_id: z.string(),
     first_name: z.string({
         invalid_type_error: 'Please provide a valid first name',
     })
@@ -38,7 +38,7 @@ const AccountFormSchema = z.object({
 
 export type AuthState = {
     errors?: {
-        id?: string[];
+        user_id?: string[];
         first_name?: string[];
         middle_name?: string[];
         last_name?: string[];
@@ -53,7 +53,7 @@ export type AuthState = {
 }
 
 const AuthenticateUser = AccountFormSchema.omit({
-    id: true,
+    user_id: true,
     first_name: true,
     middle_name: true,
     last_name: true,
@@ -79,7 +79,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
     const { email, password } = validatedFields.data
 
     try {
-        const user = await sql<User>`SELECT * FROM dev.test_user WHERE email=${email}`;
+        const user = await sql<User>`SELECT * FROM public.user WHERE email=${email}`;
 
         if (!user.rows[0]) {
             return {
@@ -102,7 +102,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
         }
 
         // ✅ Set the auth token
-        const token = generateToken({ id: user.rows[0].id, email, first_name: user.rows[0].first_name });
+        const token = generateToken({ user_id: user.rows[0].user_id, email, first_name: user.rows[0].first_name });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,
@@ -128,7 +128,7 @@ export async function authenticateUser(prevState: AuthState, formData: FormData)
 }
 
 const CreateUser = AccountFormSchema.omit({
-    id: true,
+    user_id: true,
 })
 
 export async function createUser(prevState: AuthState, formData: FormData) {
@@ -154,8 +154,8 @@ export async function createUser(prevState: AuthState, formData: FormData) {
     const { first_name, middle_name, last_name, email, password, phone } = validatedFields.data;
 
     try {
-        const duplicateEmail = await sql`SELECT COUNT(*) FROM dev.test_user WHERE email = ${email}`;
-        const duplicatePhone = phone ? await sql`SELECT COUNT(*) FROM dev.test_user WHERE phone = ${phone}` : { rows: [{ count: 0 }] };
+        const duplicateEmail = await sql`SELECT COUNT(*) FROM public.user WHERE email = ${email}`;
+        const duplicatePhone = phone ? await sql`SELECT COUNT(*) FROM public.user WHERE phone = ${phone}` : { rows: [{ count: 0 }] };
         
         if (duplicateEmail.rows[0].count > 0) {
             return {
@@ -178,12 +178,12 @@ export async function createUser(prevState: AuthState, formData: FormData) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = await sql`
-            INSERT INTO dev.test_user (first_name, middle_name, last_name, email, password, phone)
+            INSERT INTO public.user (first_name, middle_name, last_name, email, password, phone)
             VALUES (${first_name}, ${middle_name}, ${last_name}, ${email}, ${hashedPassword}, ${phone})
-            RETURNING id, email
+            RETURNING user_id, email
         `
 
-        const token = generateToken({ id: newUser.rows[0].id, email, first_name });
+        const token = generateToken({ user_id: newUser.rows[0].id, email, first_name });
 
         (await cookies()).set('auth_token', token, {
             httpOnly: true,

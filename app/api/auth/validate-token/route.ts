@@ -8,8 +8,10 @@ export async function GET(req: Request) {
         return Response.json({ error: 'Token is required' }, { status: 400 });
     }
 
-    const results = await sql`SELECT user_id, expires_at, used FROM dev.test_password_recovery_token WHERE token = ${token}`;
+    const results = await sql`SELECT user_id, expires_at, used FROM public.password_recovery_token WHERE token = ${token}`;
     const tokenData = results.rows[0];
+
+    console.log(tokenData);
 
     if (!tokenData || tokenData.used || new Date() > new Date(tokenData.expires_at)) {
         return Response.json({ error: 'Invalid or expired token' }, { status: 400 });

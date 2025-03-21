@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PageLink from "../ui/components/PageLink/PageLink";
 
 export default function AccountHome() {
-    const [user, setUser] = useState<{ id: string; email: string; first_name: string; } | null>(null);
+    const [user, setUser] = useState<{ user_id: string; email: string; first_name: string; } | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
