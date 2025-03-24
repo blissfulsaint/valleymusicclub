@@ -19,7 +19,7 @@ export default function FormButton({
             {...rest}
             className={clsx(
                 'px-2 py-1 text-white w-full rounded-md transition duration 150',
-                disabled || loading ? 'bg-slate-400 hover:bg-slate-400' : 'bg-primaryColor hover:bg-slate-200 hover:text-primaryColor',
+                disabled || loading ? 'bg-slate-400 hover:bg-slate-400 hover:cursor-not-allowed' : 'bg-primaryColor hover:bg-slate-200 hover:text-primaryColor',
                 className
             )}
             disabled={disabled || loading}
