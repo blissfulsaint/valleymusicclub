@@ -67,7 +67,7 @@ export default function ForgotPasswordForm() {
                             <StatusMessage status="error">{status.message}</StatusMessage>
                         )}
                     </InputContainer>
-                    <FormButton type="submit" disabled={isPending}>
+                    <FormButton type="submit" loading={isPending}>
                         {isPending ? "Sending..." : "Send Password Reset Link"}
                     </FormButton>
                     {status?.status === "success" && (

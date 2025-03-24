@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState, useEffect, useState } from "react"
-import { Separator, StatusMessage } from "blisskit-ui";
+import { StatusMessage } from "blisskit-ui";
 import { updateUser, AuthState } from "@/app/lib/actions/auth";
 import { useAuth } from "@/app/context/AuthContext";
 
@@ -166,7 +166,7 @@ export default function UpdateUserForm() {
                     </div>
                 </InputContainer>
                 <input type="hidden" name="user_id" value={user?.user_id} />
-                <FormButton type="submit" disabled={!isChanged || isPending}>Update Account</FormButton>
+                <FormButton type="submit" disabled={!isChanged} loading={isPending}>Update Account</FormButton>
             </OutlineFieldset>
         </Form>
     )

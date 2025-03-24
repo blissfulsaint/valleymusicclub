@@ -82,7 +82,7 @@ export default function LoginForm() {
                         </div>
                         <PageLink href='/forgot-password' className="mx-auto">Forgot your password? Reset it here!</PageLink>
                     </InputContainer>
-                    <FormButton type="submit" disabled={isPending}>Login</FormButton>
+                    <FormButton type="submit" loading={isPending}>Login</FormButton>
                     <PageLink href='/create-account' className="mx-auto">Don&#39;t have an account? Create one here!</PageLink>
                 </OutlineFieldset>
             </Form>
