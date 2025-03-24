@@ -222,6 +222,97 @@ export async function createUser(prevState: AuthState, formData: FormData) {
     }
 }
 
+const UpdateUser = AccountFormSchema.omit({
+    password: true,
+})
+
+export async function updateUser(prevState: AuthState, formData: FormData) {
+    const validatedFields = UpdateUser.safeParse({
+        user_id: formData.get('user_id'),
+        first_name: formData.get('first_name'),
+        middle_name: formData.get('middle_name'),
+        last_name: formData.get('last_name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: {
+                status: 'error',
+                text: 'Missing or Invalid Fields. Failed to create account.'
+            }
+        };
+    }
+
+    const { user_id, first_name, middle_name, last_name, email, phone } = validatedFields.data;
+
+    try {
+        const duplicateEmail = await sql`SELECT COUNT(*) FROM public.user WHERE email = ${email} AND user_id != ${user_id}`;
+        const duplicatePhone = phone ? await sql`SELECT COUNT(*) FROM public.user WHERE phone = ${phone} AND user_id != ${user_id}` : { rows: [{ count: 0 }] };
+        
+        if (duplicateEmail.rows[0].count > 0) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Email is already in use by another user.'
+                }
+            }
+        };
+
+        if (duplicatePhone.rows[0].count > 0) {
+            return {
+                message: {
+                    status: 'error',
+                    text: 'Phone number is already in use by another user.'
+                }
+            }
+        };
+
+        await sql`
+            UPDATE public.user 
+            SET 
+                first_name = ${first_name}, 
+                middle_name = ${middle_name}, 
+                last_name = ${last_name}, 
+                email = ${email}, 
+                phone = ${phone}
+            WHERE user_id = ${user_id}
+        `
+
+        const token = generateToken({ 
+            user_id, 
+            email, 
+            first_name,
+            middle_name,
+            last_name,
+            phone
+        });
+
+        (await cookies()).set('auth_token', token, {
+            httpOnly: true,
+            path: '/',
+            secure: process.env.NODE_ENV === 'production',
+        })
+    } catch (error) {
+        console.log(error);
+        return {
+            message: {
+                status: 'error',
+                text: 'Database error. Failed to update account.'
+            }
+        }
+    }
+
+    return {
+        message: {
+            status: 'success',
+            text: 'Account Updated Successfully!',
+        }
+    }
+}
+
 export async function logoutUser() {
     (await cookies()).set('auth_token', '', {
         httpOnly: true,
