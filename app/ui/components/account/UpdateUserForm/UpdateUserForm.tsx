@@ -55,122 +55,119 @@ export default function UpdateUserForm() {
     };
 
     return (
-        <>
-            <Separator size="sm" />
-            <Form action={formAction}>
-                <OutlineFieldset>
-                    <OutlineFieldsetLegend>Update Account Information</OutlineFieldsetLegend>
-                    <div id="form-error" aria-live="polite" aria-atomic="true">
-                        {state.message.text && (
-                            <StatusMessage status={state.message.status} key={state.message.text}>
-                                {state.message.text}
-                            </StatusMessage>
-                        )}
+        <Form action={formAction}>
+            <OutlineFieldset className="ml-0">
+                <OutlineFieldsetLegend>Update Account Information</OutlineFieldsetLegend>
+                <div id="form-error" aria-live="polite" aria-atomic="true">
+                    {state.message.text && (
+                        <StatusMessage status={state.message.status} key={state.message.text}>
+                            {state.message.text}
+                        </StatusMessage>
+                    )}
+                </div>
+                <InputContainer>
+                    <label htmlFor="first_name">First Name*</label>
+                    <OutlineInput 
+                        id="first_name"
+                        name="first_name"
+                        type="text"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        aria-describedby="first_name-error"
+                    />
+                    <div id="first_name-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.first_name &&
+                            state.errors.first_name.map((error: string) => (
+                                <StatusMessage status="error" key={error}>
+                                    {error}
+                                </StatusMessage>
+                            ))
+                        }
                     </div>
-                    <InputContainer>
-                        <label htmlFor="first_name">First Name*</label>
-                        <OutlineInput 
-                            id="first_name"
-                            name="first_name"
-                            type="text"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            aria-describedby="first_name-error"
-                        />
-                        <div id="first_name-error" aria-live="polite" aria-atomic="true">
-                            {state.errors?.first_name &&
-                                state.errors.first_name.map((error: string) => (
-                                    <StatusMessage status="error" key={error}>
-                                        {error}
-                                    </StatusMessage>
-                                ))
-                            }
-                        </div>
-                    </InputContainer>
-                    <InputContainer>
-                        <label htmlFor="middle_name">Middle Name</label>
-                        <OutlineInput 
-                            id="middle_name"
-                            name="middle_name"
-                            type="text"
-                            value={formData.middle_name}
-                            onChange={handleChange}
-                            aria-describedby="middle_name-error"
-                        />
-                        <div id="email-error" aria-live="polite" aria-atomic="true">
-                            {state.errors?.middle_name &&
-                                state.errors.middle_name.map((error: string) => (
-                                    <StatusMessage status="error" key={error}>
-                                        {error}
-                                    </StatusMessage>
-                                ))
-                            }
-                        </div>
-                    </InputContainer>
-                    <InputContainer>
-                        <label htmlFor="last_name">Last Name*</label>
-                        <OutlineInput 
-                            id="last_name"
-                            name="last_name"
-                            type="text"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            aria-describedby="last_name-error"
-                        />
-                        <div id="last_name-error" aria-live="polite" aria-atomic="true">
-                            {state.errors?.last_name &&
-                                state.errors.last_name.map((error: string) => (
-                                    <StatusMessage status="error" key={error}>
-                                        {error}
-                                    </StatusMessage>
-                                ))
-                            }
-                        </div>
-                    </InputContainer>
-                    <InputContainer>
-                        <label htmlFor="email">Email*</label>
-                        <OutlineInput 
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            aria-describedby="email-error"
-                        />
-                        <div id="email-error" aria-live="polite" aria-atomic="true">
-                            {state.errors?.email &&
-                                state.errors.email.map((error: string) => (
-                                    <StatusMessage status="error" key={error}>
-                                        {error}
-                                    </StatusMessage>
-                                ))
-                            }
-                        </div>
-                    </InputContainer>
-                    <InputContainer>
-                        <label htmlFor="phone">Phone Number</label>
-                        <OutlineInput 
-                            type="tel"
-                            id="phone"
-                            name="tel"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            aria-describedby="phone-error"
-                        />
-                        <div id="phone-error" aria-live="polite" aria-atomic="true">
-                            {state.errors?.phone &&
-                                state.errors.phone.map((error: string) => (
-                                    <StatusMessage status="error" key={error}>
-                                        {error}
-                                    </StatusMessage>
-                                ))
-                            }
-                        </div>
-                    </InputContainer>
-                    <input type="hidden" name="user_id" value={user?.user_id} />
-                    <FormButton type="submit" disabled={!isChanged || isPending}>Update Account</FormButton>
-                </OutlineFieldset>
-            </Form>
-        </>
+                </InputContainer>
+                <InputContainer>
+                    <label htmlFor="middle_name">Middle Name</label>
+                    <OutlineInput 
+                        id="middle_name"
+                        name="middle_name"
+                        type="text"
+                        value={formData.middle_name}
+                        onChange={handleChange}
+                        aria-describedby="middle_name-error"
+                    />
+                    <div id="email-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.middle_name &&
+                            state.errors.middle_name.map((error: string) => (
+                                <StatusMessage status="error" key={error}>
+                                    {error}
+                                </StatusMessage>
+                            ))
+                        }
+                    </div>
+                </InputContainer>
+                <InputContainer>
+                    <label htmlFor="last_name">Last Name*</label>
+                    <OutlineInput 
+                        id="last_name"
+                        name="last_name"
+                        type="text"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        aria-describedby="last_name-error"
+                    />
+                    <div id="last_name-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.last_name &&
+                            state.errors.last_name.map((error: string) => (
+                                <StatusMessage status="error" key={error}>
+                                    {error}
+                                </StatusMessage>
+                            ))
+                        }
+                    </div>
+                </InputContainer>
+                <InputContainer>
+                    <label htmlFor="email">Email*</label>
+                    <OutlineInput 
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        aria-describedby="email-error"
+                    />
+                    <div id="email-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.email &&
+                            state.errors.email.map((error: string) => (
+                                <StatusMessage status="error" key={error}>
+                                    {error}
+                                </StatusMessage>
+                            ))
+                        }
+                    </div>
+                </InputContainer>
+                <InputContainer>
+                    <label htmlFor="phone">Phone Number</label>
+                    <OutlineInput 
+                        type="tel"
+                        id="phone"
+                        name="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        aria-describedby="phone-error"
+                    />
+                    <div id="phone-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.phone &&
+                            state.errors.phone.map((error: string) => (
+                                <StatusMessage status="error" key={error}>
+                                    {error}
+                                </StatusMessage>
+                            ))
+                        }
+                    </div>
+                </InputContainer>
+                <input type="hidden" name="user_id" value={user?.user_id} />
+                <FormButton type="submit" disabled={!isChanged || isPending}>Update Account</FormButton>
+            </OutlineFieldset>
+        </Form>
     )
 }
