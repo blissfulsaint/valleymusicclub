@@ -22,7 +22,7 @@ const AccountFormSchema = z.object({
     last_name: z.string({
         invalid_type_error: 'Please provide a valid last name',
     })
-        .min(1, 'Please provide a first name'),
+        .min(1, 'Please provide a last name'),
     email: z.string()
         .email('Please provide a valid email address'),
     password: z.string()
