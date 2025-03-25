@@ -148,9 +148,9 @@ export default function UpdateUserForm() {
                 <InputContainer>
                     <label htmlFor="phone">Phone Number</label>
                     <OutlineInput 
-                        type="tel"
                         id="phone"
-                        name="tel"
+                        name="phone"
+                        type="tel"
                         value={formData.phone}
                         onChange={handleChange}
                         aria-describedby="phone-error"
