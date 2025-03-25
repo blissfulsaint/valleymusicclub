@@ -98,7 +98,7 @@ export default function UpdatePasswordForm() {
                     </div>
                 </InputContainer>
 
-                <FormButton type="submit" disabled={isPending}>Update Password</FormButton>
+                <FormButton type="submit" loading={isPending}>Update Password</FormButton>
             </OutlineFieldset>
         </Form>
     )
