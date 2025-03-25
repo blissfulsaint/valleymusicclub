@@ -241,7 +241,7 @@ export async function updateUser(prevState: AuthState, formData: FormData) {
             errors: validatedFields.error.flatten().fieldErrors,
             message: {
                 status: 'error',
-                text: 'Missing or Invalid Fields. Failed to create account.'
+                text: 'Missing or Invalid Fields. Failed to update account.'
             }
         };
     }
