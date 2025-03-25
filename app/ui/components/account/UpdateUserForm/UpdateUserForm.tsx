@@ -27,6 +27,18 @@ export default function UpdateUserForm() {
         phone: user?.phone || "",
     });
 
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                first_name: user.first_name || "",
+                middle_name: user.middle_name || "",
+                last_name: user.last_name || "",
+                email: user.email || "",
+                phone: user.phone || "",
+            });
+        }
+    }, [user]);
+
     // Track whether the form is changed
     const [isChanged, setIsChanged] = useState(false);
 
