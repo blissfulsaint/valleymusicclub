@@ -2,6 +2,9 @@
 import { LayoutBand } from "blisskit-ui";
 import PageLink from "../ui/components/PageLink/PageLink";
 import { useAuth } from "../context/AuthContext";
+import { Suspense } from "react";
+import ClubRegistrationLinks from "../ui/components/account/ClubRegistrationLinks/ClubRegistrationLinks";
+import ClubRegistrationLinksSkeleton from "../ui/components/skeleton/ClubRegistrationLinksSkeleton";
 
 export default function AccountHome() {
     const { user, loading } = useAuth();
@@ -21,6 +24,9 @@ export default function AccountHome() {
                     <PageLink href='/account/settings'>Account Settings</PageLink>
                 </>
             )}
+            <Suspense fallback={<ClubRegistrationLinksSkeleton />} >
+                <ClubRegistrationLinks />
+            </Suspense>
         </LayoutBand>
     )
 }
