@@ -6,4 +6,4 @@ export default async function ClubRegistrationLinks() {
     console.log("Test data received: " + message);
   
     return <p>{message}</p>;
-  }
+}
