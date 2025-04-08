@@ -5,5 +5,5 @@ export default async function ClubRegistrationLinks() {
     const message = await getTestData();
     console.log("Test data received: " + message);
   
-    return <p>{message}</p>;
+    return <p>In time, you will be able to access links to register and pay necessary dues to Valley Music Club right here!</p>;
 }
