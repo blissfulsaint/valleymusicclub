@@ -1,4 +1,3 @@
-import { getTestData } from "@/app/lib/utils/test";
 import { getCurrentTerm } from "@/app/lib/utils/term";
 import { Term } from "@/app/lib/db/definitions";
 
