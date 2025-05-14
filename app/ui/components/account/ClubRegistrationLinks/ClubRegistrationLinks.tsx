@@ -43,7 +43,7 @@ export default async function ClubRegistrationLinks() {
                     <h3>Join Our Club Today!</h3>
                     <p>{currentTerm?.school_year} Club Registration is due: {currentTerm && formatDate(currentTerm.club_dues_deadline)}</p>
                     <p>Membership in VMC will give you and your students opportunities to participate in luncheons, workships, clinics, and the annual Festival with the National Federation of Music Clubs.</p>
-                    <PageLink href='/page-in-development'>Join Our Club!</PageLink>
+                    <PageLink button href='/page-in-development'>Join Our Club!</PageLink>
                     <p>Questions? Email <PageLink className='inline' href='mailto:valleymusicclubaz@gmail.com'>valleymusicclubaz@gmail.com</PageLink>.</p>
                 </>
             )}
