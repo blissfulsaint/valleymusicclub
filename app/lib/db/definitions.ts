@@ -19,3 +19,18 @@ export type Term = {
     term_start_date: string;
     term_end_date: string;
 }
+
+export type ClubDues = {
+    club_dues_id: string;
+    club_dues_name: string;
+    dues: number;
+    term_id: string;
+}
+
+export type UserClubDues = {
+    club_dues_id: string;
+    user_id: string;
+    paid: boolean;
+    payment_mode: string;
+    transaction_id: string;
+}
