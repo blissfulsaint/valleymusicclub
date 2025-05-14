@@ -32,9 +32,32 @@ export default async function ClubRegistrationLinks() {
         ? await clubDuesPaid(user_id, currentTerm.term_id)
         : null;
 
+    // const currentDate = new Date();
+
+    let openDate: Date | null = null;
+    let openFormattedDate: string | null = null;
+    let openDateMinus3Months: Date | null = null;
+
+    let closeDate: Date | null = null;
+    let closeFormattedDate: string | null = null;
+    let closeDatePlus3Months: Date | null = null;
+
+    if (currentTerm) {
+        openDate = new Date(currentTerm.club_registration_open);
+        openFormattedDate = formatDate(openDate);
+
+        openDateMinus3Months = new Date(openDate);
+        openDateMinus3Months.setMonth(openDate.getMonth() - 3);
+
+        closeDate = new Date(currentTerm.club_dues_deadline);
+        closeFormattedDate = formatDate(closeDate);
+
+        closeDatePlus3Months = new Date(closeDate);
+        closeDatePlus3Months.setMonth(closeDate.getMonth() + 3);
+    }
+
     return (
         <>
-            <p>In time, you will be able to access links to register and pay necessary dues to Valley Music Club right here!</p>
             {paidStatus?.paid ? (
                 <p>Thank you for joining the Valley Music Club! We are glad you are here and look forward to providing a wide variety of musical and educational experiences for you and your students. We look forward to your participation as we work together to teach, encourage, support, and celebrate musical growth and the achievements of musicians in our community.</p>
             ) : (
