@@ -16,3 +16,18 @@ export async function getCurrentTerm(): Promise<Term | null> {
         return null;
     }
 }
+
+export async function getAllTerms(): Promise<Term[] | null> {
+    try {
+        const result = await sql<Term>`SELECT * FROM term ORDER BY school_year ASC`;
+
+        if (result.rows.length > 0) {
+            return result.rows;
+        }
+
+        return null;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return null;
+    }
+}
