@@ -35,28 +35,6 @@ export default async function ClubRegistrationLinks() {
     const termList = await getAllTerms();
     const currentDate = new Date();
 
-    // let openDate: Date | null = null;
-    // let openFormattedDate: string | null = null;
-    // let openDateMinus3Months: Date | null = null;
-
-    // let closeDate: Date | null = null;
-    // let closeFormattedDate: string | null = null;
-    // let closeDatePlus3Months: Date | null = null;
-
-    // if (currentTerm) {
-    //     openDate = new Date(currentTerm.club_registration_open);
-    //     openFormattedDate = formatDate(openDate);
-
-    //     openDateMinus3Months = new Date(openDate);
-    //     openDateMinus3Months.setMonth(openDate.getMonth() - 3);
-
-    //     closeDate = new Date(currentTerm.club_dues_deadline);
-    //     closeFormattedDate = formatDate(closeDate);
-
-    //     closeDatePlus3Months = new Date(closeDate);
-    //     closeDatePlus3Months.setMonth(closeDate.getMonth() + 3);
-    // }
-
     return (
         <>
             {paidStatus?.paid ? (
@@ -77,8 +55,6 @@ export default async function ClubRegistrationLinks() {
 
                     const closeDatePlus3Months = new Date(closeDate);
                     closeDatePlus3Months.setMonth(closeDate.getMonth() + 3);
-
-                    const currentDate = new Date();
 
                     const isPreOpen = currentDate >= openDateMinus3Months && currentDate < openDate;
                     const isOpen = currentDate >= openDate && currentDate <= closeDate;
