@@ -203,7 +203,7 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             httpOnly: true,
             path: '/',
             secure: process.env.NODE_ENV === 'production',
-        })
+        });
     } catch (error) {
         console.log(error);
         return {
@@ -320,9 +320,6 @@ export async function logoutUser() {
         secure: process.env.NODE_ENV === 'production',
         maxAge: 0, // Immediately expires
     });
-
-    revalidatePath('/');
-    redirect('/');
 }
 
 export async function getAuthStatus() {
