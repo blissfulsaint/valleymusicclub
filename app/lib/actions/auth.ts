@@ -4,8 +4,6 @@ import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { sql } from '@vercel/postgres';
 import { User } from '../db/definitions';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { generateToken } from '../utils/jwt';
 import { cookies } from 'next/headers';
 import { verifyToken } from '../utils/jwt';
