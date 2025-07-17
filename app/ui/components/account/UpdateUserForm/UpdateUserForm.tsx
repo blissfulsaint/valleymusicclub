@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react"
 import { StatusMessage } from "blisskit-ui";
 import { updateUser, AuthState } from "@/app/lib/actions/auth";
-import { useAuth } from "@/app/context/AuthContext";
+import { useAuthStatus } from "@/app/hooks/useAuthStatus";
 
 import Form from "@/app/ui/components/vmc-form/Form/Form"
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset";
@@ -13,29 +13,30 @@ import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
 
 export default function UpdateUserForm() {
-    const { refreshAuth, user } = useAuth();
+    const { user } = useAuthStatus();
 
     const initialState: AuthState = { message: { status: "none", text: "" }, errors: {} };
     const [state, formAction, isPending] = useActionState(updateUser, initialState);
 
     // Store original user data
     const [formData, setFormData] = useState({
-        first_name: user?.first_name || "",
-        middle_name: user?.middle_name || "",
-        last_name: user?.last_name || "",
-        email: user?.email || "",
-        phone: user?.phone || "",
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
     });
 
     useEffect(() => {
         if (user) {
-            setFormData({
+            setFormData(prev => ({
+                ...prev,
                 first_name: user.first_name || "",
                 middle_name: user.middle_name || "",
                 last_name: user.last_name || "",
                 email: user.email || "",
                 phone: user.phone || "",
-            });
+            }));
         }
     }, [user]);
 
@@ -44,8 +45,8 @@ export default function UpdateUserForm() {
 
     useEffect(() => {
         if (state.message.status === "success") {
-            console.log("Account updated successfully, refreshing auth...");
-            refreshAuth();
+            window.dispatchEvent(new Event('authChanged'));
+            // refreshAuth();
         }
     }, [state.message.status]);
 
@@ -83,7 +84,7 @@ export default function UpdateUserForm() {
                         id="first_name"
                         name="first_name"
                         type="text"
-                        value={formData.first_name}
+                        value={formData.first_name ?? ''}
                         onChange={handleChange}
                         aria-describedby="first_name-error"
                     />
@@ -103,7 +104,7 @@ export default function UpdateUserForm() {
                         id="middle_name"
                         name="middle_name"
                         type="text"
-                        value={formData.middle_name}
+                        value={formData.middle_name ?? ''}
                         onChange={handleChange}
                         aria-describedby="middle_name-error"
                     />
@@ -123,7 +124,7 @@ export default function UpdateUserForm() {
                         id="last_name"
                         name="last_name"
                         type="text"
-                        value={formData.last_name}
+                        value={formData.last_name ?? ''}
                         onChange={handleChange}
                         aria-describedby="last_name-error"
                     />
@@ -143,7 +144,7 @@ export default function UpdateUserForm() {
                         id="email"
                         name="email"
                         type="email"
-                        value={formData.email}
+                        value={formData.email ?? ''}
                         onChange={handleChange}
                         aria-describedby="email-error"
                     />
@@ -163,7 +164,7 @@ export default function UpdateUserForm() {
                         id="phone"
                         name="phone"
                         type="tel"
-                        value={formData.phone}
+                        value={formData.phone ?? ''}
                         onChange={handleChange}
                         aria-describedby="phone-error"
                     />

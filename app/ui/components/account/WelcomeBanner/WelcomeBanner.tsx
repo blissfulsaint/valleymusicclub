@@ -1,8 +1,8 @@
 'use client';
-import { useAuth } from "@/app/context/AuthContext";
+import { useAuthStatus } from "@/app/hooks/useAuthStatus";
 
 export default function WelcomeBanner() {
-    const { user, loading } = useAuth();
+    const { user, loading } = useAuthStatus();
 
     return (
         <>

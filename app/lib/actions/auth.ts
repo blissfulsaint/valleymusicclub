@@ -7,6 +7,7 @@ import { User } from '../db/definitions';
 import { generateToken } from '../utils/jwt';
 import { cookies } from 'next/headers';
 import { verifyToken } from '../utils/jwt';
+import { UserTokenPayload } from '../db/definitions';
 
 const AccountFormSchema = z.object({
     user_id: z.string(),
@@ -328,7 +329,7 @@ export async function getAuthStatus() {
     }
 
     try {
-        const user = verifyToken(authToken);
+        const user = verifyToken(authToken) as UserTokenPayload;
         return { isAuthenticated: !!user, user };
     } catch (error) {
         return { isAuthenticated: false, error: error };

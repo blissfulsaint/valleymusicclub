@@ -25,7 +25,7 @@ export default function LoginForm() {
             window.dispatchEvent(new Event('authChanged'));
             router.push('/account');
         }
-    }, [state.message.status]);
+    }, [state.message.status, router]);
 
     return (
         <>

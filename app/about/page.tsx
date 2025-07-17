@@ -3,10 +3,10 @@ import { LayoutBand } from "blisskit-ui"
 import Hero from "../ui/components/Hero/Hero"
 import { Separator } from "blisskit-ui";
 import PageLink from "../ui/components/PageLink/PageLink";
-import { useAuth } from "../context/AuthContext";
+import { useAuthStatus } from "../hooks/useAuthStatus";
 
 export default function About() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuthStatus();
     return (
         <>
             <Hero title="About Us" imgSrc="/teachergroup1.jpeg" />
