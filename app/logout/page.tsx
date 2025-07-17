@@ -1,26 +1,21 @@
 'use client';
 import { useEffect } from "react";
 import { LayoutBand } from "blisskit-ui";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../context/AuthContext";
+import { logoutUser } from "../lib/actions/auth";
 
 export default function LogoutPage() {
-    const router = useRouter();
-    const { refreshAuth } = useAuth();
-
     useEffect(() => {
         async function logout() {
             try {
-                await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-                refreshAuth(); // ✅ Trigger auth state update in context
-                router.push('/');
+                await logoutUser();
+                window.location.href = '/';
             } catch (error) {
                 console.error('Logout failed: ', error);
             }
         }
 
         logout();
-    }, [refreshAuth, router]);
+    }, []);
 
     return (
         <LayoutBand>

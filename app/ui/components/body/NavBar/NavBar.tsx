@@ -1,8 +1,8 @@
 'use client';
 import styles from './NavBar.module.scss';
 import { useState, useEffect } from 'react';
+import { useAuthStatus } from '@/app/hooks/useAuthStatus';
 import Link from 'next/link';
-import { useAuth } from '@/app/context/AuthContext';
 
 const links = [
     {
@@ -18,9 +18,9 @@ const links = [
 ]
 
 export default function NavBar() {
+    const { isAuthenticated } = useAuthStatus();
     const [isOpen, setIsOpen] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
-    const { isAuthenticated, refreshAuth } = useAuth();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -75,7 +75,7 @@ export default function NavBar() {
                 }
                 {isAuthenticated ? (
                     <li key='logout' className='hover:text-white cursor-pointer transition duration 150'>
-                        <Link href='/logout' aria-label='Logout and end user session.' onClick={() => {handleLinkClick(); refreshAuth();}}>
+                        <Link href='/logout' aria-label='Logout and end user session.' onClick={handleLinkClick}>
                             Logout
                         </Link>
                     </li>

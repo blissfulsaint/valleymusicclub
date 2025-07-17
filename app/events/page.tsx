@@ -2,10 +2,10 @@
 import { LayoutBand, Separator } from "blisskit-ui";
 import Hero from "../ui/components/Hero/Hero";
 import PageLink from "../ui/components/PageLink/PageLink";
-import { useAuth } from "../context/AuthContext";
+import { useAuthStatus } from "../hooks/useAuthStatus";
 
 export default function Events() {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuthStatus();
 
     return (
         <>

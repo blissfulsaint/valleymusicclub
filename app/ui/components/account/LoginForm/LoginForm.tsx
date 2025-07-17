@@ -10,7 +10,6 @@ import InputContainer from "../../vmc-form/InputContainer/InputContainer";
 import OutlineInput from "../../vmc-form/Input/Input";
 import FormButton from "../../vmc-form/FormButton/FormButton";
 import PageLink from "../../PageLink/PageLink";
-import { useAuth } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
@@ -19,17 +18,14 @@ export default function LoginForm() {
         authenticateUser,
         initialState,
     );
-    const { refreshAuth } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
         if (state.message.status === 'success') {
-            console.log('Logged in successfully, refreshing auth...');
-            refreshAuth();
-
+            window.dispatchEvent(new Event('authChanged'));
             router.push('/account');
         }
-    }, [state.message.status, refreshAuth, router])
+    }, [state.message.status, router]);
 
     return (
         <>

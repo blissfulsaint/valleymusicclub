@@ -4,11 +4,10 @@ import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { sql } from '@vercel/postgres';
 import { User } from '../db/definitions';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { generateToken } from '../utils/jwt';
 import { cookies } from 'next/headers';
 import { verifyToken } from '../utils/jwt';
+import { UserTokenPayload } from '../db/definitions';
 
 const AccountFormSchema = z.object({
     user_id: z.string(),
@@ -203,7 +202,7 @@ export async function createUser(prevState: AuthState, formData: FormData) {
             httpOnly: true,
             path: '/',
             secure: process.env.NODE_ENV === 'production',
-        })
+        });
     } catch (error) {
         console.log(error);
         return {
@@ -320,9 +319,6 @@ export async function logoutUser() {
         secure: process.env.NODE_ENV === 'production',
         maxAge: 0, // Immediately expires
     });
-
-    revalidatePath('/');
-    redirect('/');
 }
 
 export async function getAuthStatus() {
@@ -333,7 +329,7 @@ export async function getAuthStatus() {
     }
 
     try {
-        const user = verifyToken(authToken);
+        const user = verifyToken(authToken) as UserTokenPayload;
         return { isAuthenticated: !!user, user };
     } catch (error) {
         return { isAuthenticated: false, error: error };

@@ -9,6 +9,15 @@ export type User = {
     email_verified: 'y' | 'n';
 }
 
+export type UserTokenPayload = {
+    user_id: string;
+    email: string;
+    first_name: string;
+    middle_name?: string | null;
+    last_name: string;
+    phone?: string | null;
+};
+
 export type Term = {
     term_id: string;
     school_year: string;

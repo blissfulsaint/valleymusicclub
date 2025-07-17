@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useActionState } from "react";
 import { StatusMessage } from "blisskit-ui";
 import { PasswordState, updatePassword } from "@/app/lib/actions/auth";
-import { useAuth } from "@/app/context/AuthContext";
 
 import Form from "../../vmc-form/Form/Form"
 import OutlineFieldset from "../../vmc-form/OutlineFieldset/OutlineFieldset"
@@ -18,12 +17,10 @@ export default function UpdatePasswordForm() {
         updatePassword,
         initialState,
     );
-    const { refreshAuth } = useAuth();
 
     useEffect(() => {
         if (state.message.status === 'success') {
-            console.log('Password updated successfully, refreshing auth...');
-            refreshAuth();
+            window.dispatchEvent(new Event('authChanged'));
         }
     }, [state.message.status])
 
