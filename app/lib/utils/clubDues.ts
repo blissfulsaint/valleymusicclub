@@ -1,7 +1,18 @@
 import { sql } from "@vercel/postgres";
+import { ClubDues } from "../db/definitions";
 
 export type UserPaidStatus = {
     paid: boolean;
+}
+
+export async function getClubDuesByTerm(term_id: string): Promise<ClubDues[]> {
+    const result = await sql<ClubDues>`
+        SELECT *
+        FROM club_dues
+        WHERE term_id = ${term_id}
+    `;
+
+    return result.rows;
 }
 
 export async function clubDuesPaid(user_id: string, term_id: string): Promise<UserPaidStatus> {

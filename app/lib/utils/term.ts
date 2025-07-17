@@ -17,6 +17,24 @@ export async function getCurrentTerm(): Promise<Term | null> {
     }
 }
 
+export async function getOpenRegistrationTerm(): Promise<Term | null> {
+    try {
+        const result = await sql<Term>`
+            SELECT * FROM term 
+            WHERE CURRENT_DATE BETWEEN club_registration_open AND club_dues_deadline
+        `;
+    
+        if (result.rows.length > 0) {
+            return result.rows[0];
+        }
+    
+        return null;
+    } catch (error) {
+        console.error('Database Error:', error);
+        return null;
+    }
+}
+
 export async function getAllTerms(): Promise<Term[] | null> {
     try {
         const result = await sql<Term>`SELECT * FROM term ORDER BY school_year ASC`;
