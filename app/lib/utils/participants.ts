@@ -3,7 +3,7 @@
 
 import { sql } from "@vercel/postgres";
 
-import { ParticipantType } from "../db/definitions";
+import type { ParticipantType } from "../db/definitions";
 
 export async function getParticipantTypeInfoById(participant_type_id: string): Promise<ParticipantType> {
     const result = await sql<ParticipantType>`

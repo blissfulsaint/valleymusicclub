@@ -52,3 +52,9 @@ export type ParticipantType = {
     has_base_dues: boolean;
     base_dues: number | null;
 };
+
+export type VoluntaryDues = {
+    voluntary_dues_id: string;
+    voluntary_dues_name: string;
+    term_id: number;
+};

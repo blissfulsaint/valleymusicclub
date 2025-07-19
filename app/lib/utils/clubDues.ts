@@ -2,7 +2,7 @@
 // This includes many-to-many tables such as user_club_dues
 
 import { sql } from "@vercel/postgres";
-import { ClubDues, ClubDuesPaidStatus } from "../db/definitions";
+import type { ClubDues, ClubDuesPaidStatus } from "../db/definitions";
 
 export async function getClubDuesByTerm(term_id: string): Promise<ClubDues[]> {
     const result = await sql<ClubDues>`
